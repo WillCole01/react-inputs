@@ -1,5 +1,5 @@
 import Input from "./Input.js";
-
+//handleActive={handleActive} handleActive
 const InputList = ({ inputs, changeInput }) => {
   const renderInput = (input, changeInput) => {
     return (
