@@ -37,7 +37,7 @@ argument_mappings = { // a dictionary of dictionaries to hold any arguments that
   "currencyid":{}
 };
 
-arguments  = {
+componentArguments  = {
   node:"-1", // maybe loaded based on the model
   enhanceddata:[],
   performancestatistic:['InformatioRatioDecayWeighted','', 'TrackingErrorDecayWeighted', 'PerformanceHistoryLengthMonths','BenchmarkHistoryLengthMonths', 'ExchangeRateHistoryLengthMonths','5YearTrackingError'],

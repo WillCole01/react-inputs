@@ -25,7 +25,6 @@
   Folder: C:\Users\will2659\OneDrive - Willis Towers Watson\Documents\React\testing
 */ 
 
-
     class ErrorList
     {
 
@@ -165,6 +164,20 @@
         this._grammars = grammars;
       };
 
+      getUnique = (lst) =>
+      {
+        return lst.filter((item, i, ar) => ar.indexOf(item) === i);
+      }
+
+      getInitialList = () => 
+      {
+        let x = [];
+        for(let i = 1; i < Object.keys(grammars).length; i++)
+        {
+          x.push(grammars[i][0])
+        }
+        return getUnique(x);
+      }
 
       getMatchGrammars = (expression) =>
       {
