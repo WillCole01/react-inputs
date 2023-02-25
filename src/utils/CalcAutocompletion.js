@@ -176,7 +176,7 @@ import React from "react";
         {
           x.push(grammars[i][0])
         }
-        return getUnique(x);
+        return [... new Set(x)]; //getUnique(x);
       }
 
       getMatchGrammars = (expression) =>

@@ -7,9 +7,8 @@ import '../utils/Globals.js';
 //handleActive={handleActive} handleActive
 const InputList = ({ inputs, changeInput }) => {
 
-    console.log(add(1,2));
     const w = new WordParser();
-    const l = new Lister(word_parser=w, args=componentArguments, grammars=grammars );
+    const l = new Lister(w, componentArguments, grammars );
     const initialList = l.getInitialList();
 
 
