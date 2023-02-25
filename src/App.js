@@ -2,7 +2,7 @@ import "./styles.css";
 import InputList from "./components/InputList";
 import {Row, Col, Container} from 'react-bootstrap';
 import BtsNavbar from './components/BtsNavbar';
-import { useState, useEffect, React } from "react";
+import { useState, React } from "react";
 import Button from "./components/Button";
 import TextArea from "./components/TextArea";
 

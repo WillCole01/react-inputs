@@ -1,4 +1,4 @@
-
+import React from "react";
 /*
   notes = code in errors (red) and group changes
   separators => '.(),' -> ignore all when enclosed in quotations
@@ -67,7 +67,7 @@
 
 
 
-    class Translator
+    export class Translator
     {
       constructor(expressions, templates, grammars, args, grammar_templates_dict, argument_mappings, argument_placeholders,argument_placeholder_start='{%',argument_placeholder_end='%}')
       {
@@ -343,7 +343,7 @@
         // clean the word array
         let token = ''
         for(let i = 0; i < this.wordArray.length; i++)
-        {
+        { 
           token = this.wordArray[i].indexOf('(') != -1 ? this.wordArray[i].substring(0, this.wordArray[i].indexOf('(')) : this.wordArray[i];
           if(this.getDictionaryWordByIndex(i,this._sequence_configurations).includes(token) === false)
           {
@@ -372,3 +372,11 @@
       };
 
     };
+
+
+    function add(x, y) {
+      return x + y
+    }
+
+    export default add;
+    export { WordParser,Lister };

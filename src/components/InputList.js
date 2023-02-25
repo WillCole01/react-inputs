@@ -1,20 +1,17 @@
 import Input from "./Input.js";
-import  {Lister, WordParser} from '../utils/Autocomplete';
+import  add, {WordParser,Lister} from '../utils/CalcAutocompletion.js';
 import '../utils/Globals.js';
+// import ScriptTag from 'react-script-tag';
 
 
 //handleActive={handleActive} handleActive
 const InputList = ({ inputs, changeInput }) => {
-  const w = new WordParser();
-  const l = new Lister(word_parser=w, args=componentArguments, grammars=grammars );
-  const initialList = l.getInitialList();
 
-  useEffect( () => {
-    // get the input that has changed, check the event (specific key press), determine whether a new list must be passed down based on the object
-  }
-    ,[inputs]
-  );
-  
+    console.log(add(1,2));
+    const w = new WordParser();
+    const l = new Lister(word_parser=w, args=componentArguments, grammars=grammars );
+    const initialList = l.getInitialList();
+
 
   const renderInput = (input, initialList, changeInput) => {
 
