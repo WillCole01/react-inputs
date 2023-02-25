@@ -30,13 +30,12 @@ const [CountryList, setCountryList] = useState (["Afghanistan","Albania","Algeri
   return (
     <Card>
       <Card.Body>
-      <Form.Group className="mb-3" controlId="formBasicText">
+      <Form.Group className="mb-3" controlId="formBasicText" autocomplete="off">
         <Form.Control placeholder="Calc"
                       key={"DataList_" + `${input.key}`}
                       list={ListId}
                       onClick={partial(changeInput, input)}
                       onChange={(e) => changeText(e.target.value)}
-                      // onKeyDownn ={(e) => updateList(e.target.value)}
                       value={input.value} />
             <Datalist DropdownList={inputList} Identifier={ListId} />
           <Form.Text className="text-muted" >

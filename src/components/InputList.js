@@ -2,6 +2,7 @@ import Input from "./Input.js";
 import  {Lister, WordParser} from '../utils/Autocomplete';
 import '../utils/Globals.js';
 
+
 //handleActive={handleActive} handleActive
 const InputList = ({ inputs, changeInput }) => {
   const w = new WordParser();
