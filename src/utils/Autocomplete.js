@@ -119,7 +119,7 @@ function autocomplete(inp, arr) {
                 {
 
                     x[currentFocus].click(); //.click();
-                //    this.currentValue = this.getElementsByTagName("input")[0].value;
+                  //    this.currentValue = this.getElementsByTagName("input")[0].value;
                     // this.currentValue = this.getElementsByTagName("input")[0].value;
                 }
           }

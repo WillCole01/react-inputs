@@ -69,7 +69,10 @@ import React from "react";
 
     export class Translator
     {
-      constructor(expressions, templates, grammars, args, grammar_templates_dict, argument_mappings, argument_placeholders,argument_placeholder_start='{%',argument_placeholder_end='%}')
+      constructor(expressions, templates, grammars, args, 
+                  grammar_templates_dict, argument_mappings, argument_placeholders, 
+                  argument_placeholder_start='{%',argument_placeholder_end='%}'
+                )
       {
         this._expressions = expressions;
         this._templates = templates;

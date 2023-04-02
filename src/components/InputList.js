@@ -1,22 +1,25 @@
-import Input from "./Input.js";
-// import ScriptTag from 'react-script-tag';
+import BtsInput from "./BtsInput";
+
+const InputList = ({ inputs, changeInput, handleClick, lister }) => {
 
 
-//handleActive={handleActive} handleActive
-const InputList = ({ inputs, changeInput }) => {
+  const getWordList = (input) => {lister.getWordList(input.inputText)};
+  const initialWordList = lister.getInitialList();
 
-  const renderInput = (input, initialList, changeInput) => {
-
-    // add an initial list property from the lister
-
+  const renderInput = (input, changeInput, handleClick) => {
     return (
-      <li>
-        <Input input={input} inputList={initialList} changeInput={changeInput} /> 
+      <li key={input.id}>
+           <BtsInput input={input} changeInput={changeInput} handleClick={handleClick} initialWordList={initialWordList}/>
       </li>
     );
   };
 
-  return <ul>{inputs.map((x) => renderInput(x, initialList, changeInput))}</ul>;
+
+  return (<ul>
+              {
+                inputs.map((x) => (renderInput(x,  changeInput, handleClick )))
+              }
+          </ul>);
 };
 
 export default InputList;

@@ -1,45 +1,42 @@
 import "./styles.css";
-import InputList from "./components/InputList";
+import ScrollBox from "./components/ScrollBox";
 import {Row, Col, Container} from 'react-bootstrap';
 import BtsNavbar from './components/BtsNavbar';
 import { useState, React } from "react";
 import Button from "./components/Button";
 import TextArea from "./components/TextArea";
+import RunCard from "./components/RunCard";
 
 // autocomplete and translation helpers
-import  add, {WordParser,Lister} from '../utils/CalcAutocompletion.js';
-import '../utils/Globals.js';
+import  {WordParser,Lister} from './utils/CalcAutocompletion.js';
+import './utils/Globals.js';
+
 
 export default function App() {
-  const [inputs, setInputs] = useState([{ key: 1, inputText: "" }]);
-  const [id, setId] = useState(2);
-  const [activeInput, setActiveInput] = useState(inputs[0]);
 
-  // autocomplete and translations helper classes
+  const intialInputs = [{ id: 1, inputText: "", isActive:false }];
+
+  const [inputs, setInputs] = useState(intialInputs);
+  const [id, setId] = useState(3);
+  const RunInformationData = {"Manager":"GSAM", "Product": "Equity Global", "AsAtDate":"2015-01-01"};
+
   const w = new WordParser();
   const l = new Lister(w, componentArguments, grammars );
-  const [avtiveInputList, setActiveInputList] = useState(l.getInitialList()); // we're only interested in the active input at any one time -> just one state var!
-
-  // INPUTS properties => change / activate 
-  const changeActive = (input) =>
-  {
-    const i = inputs.findIndex(x => x.key === input);
-    setActiveInput(inputs[i]);
-  };
 
   const changeInput = (input, text) => {
+    console.log(text);
     const newInputs = [...inputs];
-    const i = newInputs.findIndex((a) => a.key === input.key);
+    const i = newInputs.findIndex((a) => a.id === input.id);
     newInputs[i].inputText = text; // todo = here -> should use the autocomplete / translation object to determine new text (enter, dot, bracket)
     Object.freeze(newInputs);
     setInputs(newInputs);
   };
 
-
-  // Inputs => add / remove
   const addInput = () => {
+    console.log(inputs);
+
     setId(id + 1);
-    const newInput = { key: id, inputText: "" };
+    const newInput = { id: id, inputText: "", isActive:false };
     const newInputs = [...inputs];
     newInputs.push(newInput);
     Object.freeze(newInputs);
@@ -47,6 +44,7 @@ export default function App() {
   };
 
   const removeInput = () => {
+    console.log(inputs);
     if(inputs.length > 1)
     {
       setId(id - 1);
@@ -56,32 +54,74 @@ export default function App() {
     }
   };
 
+  const jsonEmbed = (input) => {
+    let id = input.id;
+    let [calculation, calculationString] = input.inputText.split('|');
+    let jsonCalc = { calculationOrder : {id},
+                      calculation: {calculation},
+                      calculationString: {calculationString}
+    };
+    return jsonCalc;
+  }
+
+  const copyAllActive = () => {
+    let jsonCalcString = inputs.filter(i => (i.isActive === true))
+          .map(i => {jsonEmbed(i)}).join(",");
+        navigator.clipboard.writeText(jsonCalcString);
+    };
+
+  const handleClick = (input) => {
+
+    const newInputs = [...inputs];
+    let active = newInputs.filter(i => (i.id === input.id))[0].isActive;
+    
+    console.log(newInputs);
+
+    if (active == true)
+    {
+      newInputs.filter(i => i.id === input.id)[0].isActive = false;
+    }
+    else
+    {
+      newInputs.filter(i => i.id === input.id)[0].isActive = true;
+    }
+
+    Object.freeze(newInputs);
+    setInputs(newInputs);
+  }
+
   return (
     <div className="App">
     <Container>
-    <Row>
-      <BtsNavbar /> 
-    </Row>
-    <Col md={12}>
-      <Row className="fluid full" >
-        <Col md={9}>
-          <InputList
-              inputs={inputs}
-              changeInput={changeInput}
-              handleActive={changeActive}
-            />
-            <>
-              <section className="Buttons">
-                <Button buttonText="Add Calc" InputAction={addInput} />
-                <Button buttonText="Remove Calc" InputAction={removeInput} />
-              </section>
-            </>
-          </Col>
-          <Col md={3}>
-              <TextArea className="fluid full" activeInput={activeInput}/>
-          </Col>
-      </Row>
-     </Col>
+        <Row>
+          <BtsNavbar /> 
+        </Row>
+        <Row>
+          <RunCard informationMap={RunInformationData} />
+        </Row>
+        <Col md={12}>
+          
+          <Row className="fluid full" >
+      
+            <Col md={9}>
+              <ScrollBox inputs={inputs} changeInput={changeInput} handleClick={handleClick} lister={l} />
+              <div>
+                <section className="Buttons">
+                  <Button buttonText="Add Calc" handleCLick={addInput} />
+                  <Button buttonText="Remove Calc" handleCLick={removeInput} />
+                  <Button buttonText="Copy Calc" handleCLick={copyAllActive} />
+                  <Button buttonText="Run all steps" handleCLick={null} />
+                </section>
+              </div>
+            </Col>
+      
+            <Col md={3}>
+                <TextArea className="fluid full"/>
+            </Col>
+      
+          </Row>
+
+        </Col>
     </Container>
     </div>
   );

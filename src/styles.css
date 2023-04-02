@@ -3,11 +3,45 @@
   text-align: center;
 }
 
+.information {
+  text-align:left;
+  background-color: lightgrey;
+  border-width: 5px;
+  border-color: white;
+}
+
+.ScrollBox{
+  color:white;
+  height: 70%;
+  max-height: 800px;
+  box-sizing: border-box;
+}
+
+.active-card {
+  background-color:lightgray;
+  border-width: 5px;
+  position: relative;
+  z-index: 1;
+}
+
 .Buttons
 {
   text-align: left;
   margin-left:6%;
 }
+
 ul {
   list-style-type: none;
 }
+
+/* .autocomplete-items{
+  padding: 10px;
+  cursor: pointer;
+  background-color: #fff;
+  border-bottom: 1px solid #d4d4d4;
+} */
+
+/* .autocomplete {
+  position: relative;
+  display: inline-block;
+} */
