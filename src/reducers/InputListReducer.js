@@ -1,69 +1,45 @@
 import React, { useReducer } from 'react';
 
-const INITIAL_STATE = [{ id: 1, inputText: "", isActive:false }];
+const inputs_state = [{ id: 1, inputText: "", isActive:false }];
 
 const reducer = (state, action) => {
-switch (action.type) {
-  case 'SET_NEW_INPUT_VALUE':
-    return {
-      ...state,
-      currentInputText: action.payload
-    };
+  switch (action.type) {
 
-  case 'REMOVE_INPUT':
-    return {
-      ...state,
-      searchQuery: action.payload
-    };
-  default:
-    return state;
-}
-};
+    case 'SET_NEW_INPUT_VALUE':
+      return {
+        ...state,
+        inputs: [
+          ...state.inputs,
+          { id: action.payload.id, inputText: "", isActive:false }
+        ]
+      };
 
-const setUser = user => ({
-type: 'SET_USER',
-payload: user
-});
+    case 'REMOVE_INPUT':
+      return {
+        ...state,
+        inputs: [
+          ...state.inputs,
+          state.inpputs.filter((x) => (x.id != action.payload.input.id))
+        ]
+      };
 
-const setSearchQuery = queryString => ({
-type: 'SET_SEARCH_QUERY',
-payload: queryString
-});
+      case 'CHANGE_INPUT':
+        return {
+            ...state,
+            inputs: [ ...state.inputs,
+                      state.inpputs
+                          .filter((x) => (x.id === action.payload.input.id))
+                          .value = action.payload.wording]
+        };
 
-const UseReducerExample = () => {
-const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
-const { user, searchQuery } = state;
+    default:
+      return state;
+}};
 
-useEffect(() => {
-  const fetchFunc = async () => {
-    const response = await fetch(
-      `https://jsonplaceholder.typicode.com/users?username=${searchQuery}`
-    );
-    const resJson = await response.json();
-    dispatch(setUser(resJson[0]));
-  };
+const addInput      = input => ( dispatch({type: 'SET_NEW_INPUT_VALUE', payload: input}) );
+const removeInput   = input => ( dispatch({ type: 'REMOVE_INPUT', payload: input}) );
+const modifyInput   = (input, wording) => ( dispatch({ type: 'CHANGE_INPUT', payload: {input:{input}, wording:{wording}}}) );
 
-  fetchFunc();
-}, [searchQuery]);
+const [state, dispatch] = useReducer(reducer, inputs_state);
 
-return (
-  <Card>
-    <input
-      type='search'
-      value={searchQuery}
-      onChange={event => dispatch(setSearchQuery(event.target.value))}
-    />
-    {user ? (
-      <div>
-        <h3>{user.name}</h3>
-        <h3> {user.username} </h3>
-        <h3> {user.email} </h3>
-      </div>
-    ) : (
-      <p>No user found</p>
-    )}
-  </Card>
-);
-};
-
-export default UseReducerExample;
+export default addInput; removeInput; modifyInput; inputs_state;
