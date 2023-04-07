@@ -1,8 +1,4 @@
-import React, { useReducer } from 'react';
-
-const inputs_state = [{ id: 1, inputText: "", isActive:false }];
-
-const reducer = (state, action) => {
+const InputReducer = (state, action) => {
   switch (action.type) {
 
     case 'SET_NEW_INPUT_VALUE':
@@ -36,10 +32,4 @@ const reducer = (state, action) => {
       return state;
 }};
 
-const addInput      = input => ( dispatch({type: 'SET_NEW_INPUT_VALUE', payload: input}) );
-const removeInput   = input => ( dispatch({ type: 'REMOVE_INPUT', payload: input}) );
-const modifyInput   = (input, wording) => ( dispatch({ type: 'CHANGE_INPUT', payload: {input:{input}, wording:{wording}}}) );
-
-const [state, dispatch] = useReducer(reducer, inputs_state);
-
-export default addInput; removeInput; modifyInput; inputs_state;
+export default InputReducer;
