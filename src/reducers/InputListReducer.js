@@ -1,35 +1,52 @@
 const InputReducer = (state, action) => {
+  let updatedState;
   switch (action.type) {
-
-    case 'SET_NEW_INPUT_VALUE':
-      return {
+    case 'ADD_INPUT':
+      updatedState = {
         ...state,
         inputs: [
           ...state.inputs,
-          { id: action.payload.id, inputText: "", isActive:false }
+        { id: action.payload.current, inputText: "", isActive:false }
         ]
       };
+      break;
 
     case 'REMOVE_INPUT':
-      return {
+      updatedState = {
         ...state,
         inputs: [
-          ...state.inputs,
-          state.inpputs.filter((x) => (x.id != action.payload.input.id))
+          ...state.inputs
+          // ,state.inputs.filter(x => (x.id != action.payload.input.id))
         ]
       };
+      break;
 
       case 'CHANGE_INPUT':
-        return {
-            ...state,
-            inputs: [ ...state.inputs,
-                      state.inpputs
-                          .filter((x) => (x.id === action.payload.input.id))
-                          .value = action.payload.wording]
+        updatedState = {
+          ...state,
+          inputs: [
+            ...state.inputs,
+          { id: action.payload.input.input.id, 
+            inputText:action.payload.wording.wording, 
+            isActive:action.payload.input.input.isActive }
+          ]
         };
-
+        // updatedState = {
+        //     ...state,
+        //     inputs: [ ...state.inputs,
+        //       inputs.filter(x => x.id == action.payload.input.id)
+        //       .value = action.payload.wording
+        //       // ,state.inpputs
+        //       //             .filter((x) => (x.id === action.payload.input.id))
+        //       //             .value = action.payload.wording
+        //                 ]
+        // };
+        break;
     default:
-      return state;
-}};
+      updatedState = state;
+      break;
+    }
+    return updatedState;
+};
 
 export default InputReducer;

@@ -1,33 +1,47 @@
 import "./styles.css";
-import ScrollBox from "./components/ScrollBox";
+import {useRef, useReducer, React } from "react";
 import {Row, Col, Container} from 'react-bootstrap';
+import InputReducer from "./reducers/InputListReducer"; 
+
+// js class helpers -> autocomplete and translations
+import  {WordParser, Lister} from './utils/CalcAutocompletion.js';
+
+// autocomplete data
+import './utils/Globals.js';
+
+// components
+import ScrollBox from "./components/ScrollBox";
 import BtsNavbar from './components/BtsNavbar';
-import { useState, useReducer, React } from "react";
 import Button from "./components/Button";
 import TextArea from "./components/TextArea";
 import RunCard from "./components/RunCard";
-import InputReducer from "./reducers/InputListReducer"; 
-
-// autocomplete and translation helpers
-import  {WordParser,Lister} from './utils/CalcAutocompletion.js';
-import './utils/Globals.js';
-
 
 export default function App() {
 
-  const inputs_state = [{ id: 1, inputText: "", isActive:false }];
+
+  // init app data 
+  const appState = {inputs:[{ id: 1, inputText: "", isActive:false }]};
   const RunInformationData = {"Manager":"GSAM", "Product": "Equity Global", "AsAtDate":"2015-01-01"};
-  const [id, setId] = useState(3);
-  
-  const [state, dispatch] = useReducer(InputReducer, inputs_state);
 
-  const addInput      = input => ( dispatch({type: 'SET_NEW_INPUT_VALUE', payload: input}) );
-  const removeInput   = input => ( dispatch({ type: 'REMOVE_INPUT', payload: input}) );
-  const changeInput   = (input, wording) => ( dispatch({ type: 'CHANGE_INPUT', payload: {input:{input}, wording:{wording}}}) );
+  // hooks
+  const id = useRef(1);
+  const [state, dispatch] = useReducer(InputReducer, appState);
 
+  // helper objects
   const w = new WordParser();
   const l = new Lister(w, componentArguments, grammars );
 
+  // component functions (tba 'input' context)  
+  const addInput      =  () => { id.current = id.current + 1;  dispatch({type: 'ADD_INPUT', payload: id});}
+  const removeInput   = function () { id.current = id.current - 1; dispatch({type: 'REMOVE_INPUT', payload: id})} 
+  const changeInput   = (input, wording) => 
+                      ( 
+                        dispatch({ type: 'CHANGE_INPUT', payload: {input:{input}, wording:{wording}}}) 
+                      );
+
+  // tba -> added login context for users (backed by auth api)
+
+  // FUNCTION 1 -> transform inputs to json using helpers
   const jsonEmbed = (input) => {
     let id = input.id;
     let [calculation, calculationString] = input.inputText.split('|');
@@ -38,14 +52,15 @@ export default function App() {
     return jsonCalc;
   }
 
+  // FUNCTION 2 -> Copy active to clipboard 
   const copyAllActive = () => {
     let jsonCalcString = inputs.filter(i => (i.isActive === true))
           .map(i => {jsonEmbed(i)}).join(",");
         navigator.clipboard.writeText(jsonCalcString);
     };
 
+  // FUNCTION 3 -> set an input to active on click    
   const handleClick = (input) => {
-
     const newInputs = [...inputs];
     let active = newInputs.filter(i => (i.id === input.id))[0].isActive;
     
@@ -76,7 +91,7 @@ export default function App() {
           <Row className="fluid full" >
       
             <Col md={9}>
-              <ScrollBox inputs={inputs_state} changeInput={changeInput} handleClick={handleClick} lister={l} />
+              <ScrollBox inputs={state.inputs} changeInput={changeInput} handleClick={handleClick} lister={l} />
               <div>
                 <section className="Buttons">
                   <Button buttonText="Add Calc" handleCLick={addInput} />

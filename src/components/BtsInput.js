@@ -24,7 +24,6 @@ var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla"
 
 const BtsInput = ({input, changeInput, handleClick}) => {
 
-  console.log("the input has just been updated to -> " + input.inputText);
   const [filteredWords, setFilteredWords] = useState(['']); // filteredWords
   const [textLength, setTextLength] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);

@@ -1,8 +1,7 @@
 import BtsInput from "./BtsInput";
 
 const InputList = ({ inputs, changeInput, handleClick, lister }) => {
-
-
+  
   const getWordList = (input) => {lister.getWordList(input.inputText)};
   const initialWordList = lister.getInitialList();
 
