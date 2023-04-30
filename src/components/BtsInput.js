@@ -75,7 +75,7 @@ const BtsInput = ({input, changeInput, handleClick}) => {
   }
 
   const handleInput = (e) => {
-    console.log("this is the key:" + e.key);
+    // console.log("this is the key:" + e.key);
     if(["ArrowUp", "ArrowDown", "Enter"].indexOf(e.key) != -1)
     {
       handleKeyInput(e);
@@ -86,6 +86,10 @@ const BtsInput = ({input, changeInput, handleClick}) => {
     }
     
   }
+
+  // console.log("This is the input in BtsInput: ");
+  // console.log(input);
+  // console.log("BtsInput inputText Length: " + input.inputText.length);
 
   return (
     <Card >
@@ -110,7 +114,7 @@ const BtsInput = ({input, changeInput, handleClick}) => {
           </Form.Group>
             < Dropdown wordList={filteredWords} 
                        leftPosition={0} 
-                       showFirstN={(filteredWords.length > 0) ? firstN : 0 } 
+                       showFirstN={(filteredWords.length > 0) ? firstN : 0 }
                        textLength={input.inputText.length}
                        input={input.value}
                        changeInput={changeInput}
