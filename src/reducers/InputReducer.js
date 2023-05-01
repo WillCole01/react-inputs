@@ -34,6 +34,47 @@ const InputReducer = (state, action) => {
                     };
     break;
 
+    case 'ACTIVATE_SINGLEINPUT': // single click - activates just the one input
+    index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+
+    var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
+    var updatedStateInputs = state.inputs;
+    updatedStateInputs.forEach(i => (i.isActive = false));
+    
+    updatedState = {  ...state,  
+      inputs: update(updatedStateInputs, {$splice: [[index, 1, updatedInput]]})
+    };
+    updatedState.activeInputs.clear();
+    updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
+  break;
+
+  case 'DEACTIVATE_SINGLEINPUT':
+    var updatedStateInputs = state.inputs;
+    updatedStateInputs.forEach(i => (i.isActive = false));
+    updatedState = {  ...state,  
+                      inputs: updatedStateInputs
+                    };
+    updatedState.activeInputs.clear();
+  break;
+
+  case 'ACTIVATE_INPUT': // single click - activates just the one input
+    index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+    var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
+    updatedState = {  ...state,  
+                      inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
+                    };
+    updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
+  break;
+
+  case 'DEACTIVATE_INPUT':
+    index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+    var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
+    updatedState = {  ...state,  
+                        inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
+                     };
+    updatedState.activeInputs = updatedState.activeInputs.delete(updatedInput.id);
+  break;
+  
     case 'ACTIVATE_MULTIPLEINPUTS': // maybe split this into add active inputs and remove active inputs? -> one function = one target
       index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
       var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
@@ -44,46 +85,6 @@ const InputReducer = (state, action) => {
     break;
 
     case 'DEACTIVATE_MULTIPLEINPUTS':
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
-      updatedState = {  ...state,  
-                          inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
-                       };
-      updatedState.activeInputs.delete(updatedInput.id);
-    break;
-
-    case 'ACTIVATE_SINGLEINPUT': // single click - activates just the one input
-      updatedState.activeInputs.clear();
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
-      var updatedStateInputs = state.inputs;
-      updatedStateInputs.array.forEach(element => {element.isActive = false});
-      updatedState = {  ...state,  
-                        inputs: update(updatedStateInputs, {$splice: [[index, 1, updatedInput]]})
-                      };
-      updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
-    break;
-
-    case 'DEACTIVATE_SINGLEINPUT':
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
-      updatedState = {  ...state,  
-                          inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
-                       };
-      updatedState.activeInputs.delete(updatedInput.id);
-    break;
-
-    case 'ACTIVATE_INPUT': // single click - activates just the one input
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
-      updatedState = {  ...state,  
-                        inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
-                      };
-      updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
-    break;
-
-    case 'DEACTIVATE_INPUT':
-
       index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
       var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
       updatedState = {  ...state,  

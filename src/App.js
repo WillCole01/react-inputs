@@ -23,8 +23,8 @@ export default function App() {
   const [ctrlKey, setCtrlKey] = useState(false);
   const [shiftKey, setShiftKey] = useState(false);
 
-  const appState = {shiftKeyActive:0,
-                    ctrltKeyActive:0,
+  const appState = {shiftKeyActive:false,
+                    ctrltKeyActive:false,
                     activeInputs: new Set([]),
                     inputs:[{ id: 1, inputText: "", isActive:false }]};
   const [state, dispatch] = useReducer(InputReducer, appState);
@@ -64,17 +64,17 @@ export default function App() {
 
   const changeInput = (input, wording) =>  { dispatch({ type: 'CHANGE_INPUTTEXT', payload: {input:{input}, wording:{wording}}})};
   
-  const changeInputActivate = (input) =>  { input.isActive ?
-                                              dispatch({ type: 'DEACTIVATE_INPUT', payload: {input:{input}}}): 
-                                              dispatch({ type: 'ACTIVATE_INPUT', payload: {input:{input}}}) };
+  const changeInputActivate = (input) =>  { if(input.isActive === true)
+                                              {dispatch({ type: 'DEACTIVATE_INPUT', payload: {input:{input}}})} 
+                                              else{dispatch({ type: 'ACTIVATE_INPUT', payload: {input:{input}}})} };
 
-  const changeInputActivateMultiple = (input) =>  { input.isActive ?
-                                              dispatch({ type: 'DEACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}}): 
-                                              dispatch({ type: 'ACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}}) 
+  const changeInputActivateMultiple = (input) =>  { if(input.isActive === true) // add ctrl + a keyboard shortcut to select all inputs
+                                              {dispatch({ type: 'DEACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}})} 
+                                              else{dispatch({ type: 'ACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}})} 
                                             };
-  const changeInputActivateSingle = (input) =>  { input.isActive ?
-                                              dispatch({ type: 'DEACTIVATE_SINGLEINPUT', payload: {input:{input}}}): 
-                                              dispatch({ type: 'ACTIVATE_SINGLEINPUT', payload: {input:{input}}}) 
+  const changeInputActivateSingle = (input) =>  { if(input.isActive === true)
+                                              {dispatch({ type: 'DEACTIVATE_SINGLEINPUT', payload: {input:{input}}})}
+                                              else{dispatch({ type: 'ACTIVATE_SINGLEINPUT', payload: {input:{input}}})} 
                                             };
   
   const inputActivate = (input) => {
