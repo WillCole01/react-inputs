@@ -1,5 +1,5 @@
 import "./styles.css";
-import {useRef, useReducer, React } from "react";
+import {useRef, useReducer, useCallback, useEffect, React } from "react";
 import {Row, Col, Container} from 'react-bootstrap';
 import InputReducer from "./reducers/InputReducer"; 
 
@@ -20,7 +20,7 @@ export default function App() {
 
   // init app data 
   const RunInformationData = {"Manager":"GSAM", "Product": "Equity Global", "AsAtDate":"2015-01-01"};
-  const appState = {activeInputs:[],
+  const appState = {activeInputs: new Set([]),
                     inputs:[{ id: 1, inputText: "", isActive:false }]};
   const [state, dispatch] = useReducer(InputReducer, appState);
 
@@ -32,23 +32,39 @@ export default function App() {
   const w = new WordParser();
   const l = new Lister(w, componentArguments, grammars );
 
+  // tracking key presses for keyboard shortcuts
+  const handleKeyPress = useCallback((event) => {
+    console.log(`Key pressed: ${event.key}`);
+  }, []);
+
+  useEffect(() => {
+    // attach the event listener
+    document.addEventListener('keydown', handleKeyPress);
+
+    // remove the event listener
+    return () => {
+      document.removeEventListener('keydown', handleKeyPress);
+    };
+  }, [handleKeyPress]);
+  // handle what happens on key press
+
+  
   // tba -> added login context for users (backed by auth api)
   // component functions (tba 'input' context)  
-  const addInput      =  () => {  topInputId.current = topInputId.current + 1; 
-                                  dispatch({type: 'ADD_INPUT', payload: topInputId.current}); 
-                                };
+  const addInput =  () => {  topInputId.current = topInputId.current + 1; dispatch({type: 'ADD_INPUT', payload: topInputId.current}); };
 
-  const removeInput   =  () => {  dispatch({type: 'REMOVE_INPUT', payload: topInputId.current}); 
-                                  topInputId.current = topInputId.current - 1; 
-                               };
+  const removeInput =  () => {  dispatch({type: 'REMOVE_INPUT', payload: topInputId.current}); topInputId.current = topInputId.current - 1; };
 
-  const changeInput   = (input, wording) =>  { 
-                                              dispatch({ type: 'CHANGE_INPUT', payload: {input:{input}, wording:{wording}}}) 
-  };
+  const changeInput = (input, wording) =>  { dispatch({ type: 'CHANGE_INPUTTEXT', payload: {input:{input}, wording:{wording}}})};
   
-  const activateInput   = (input) =>  { 
-                                        dispatch({ type: 'ACTIVATE_INPUT', payload: {input:{input}}}) 
-                                      };
+  const changeInputActivate = (input) =>  { input.isActive ?
+                                              dispatch({ type: 'DEACTIVATE_INPUT', payload: {input:{input}}}): 
+                                              dispatch({ type: 'ACTIVATE_INPUT', payload: {input:{input}}}) };
+
+  const changeInputActivateMultipleInputs = (input) =>  { input.isActive ?
+                                              dispatch({ type: 'DEACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}}): 
+                                              dispatch({ type: 'ACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}}) 
+                                            };
 
   // FUNCTION 1 -> transform inputs to json using helpers
   const jsonEmbed = (input) => {
@@ -100,7 +116,7 @@ export default function App() {
           <Row className="fluid full" >
       
             <Col md={9}>
-              <ScrollBox inputs={state.inputs} changeInput={changeInput} handleClick={activateInput} lister={l} />
+              <ScrollBox inputs={state.inputs} changeInput={changeInput} handleClick={changeInputActivate} lister={l} />
               <div>
                 <section className="Buttons">
                   <Button buttonText="Add Calc" handleCLick={addInput}/>
