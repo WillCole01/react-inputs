@@ -1,21 +1,50 @@
 var update = require('immutability-helper');
 
+const updateInputAttribute = (inputs, id=NaN, attribute, newValue) => {
+  for (let object of inputs) {
+    if (!isNaN(id) && object.id === id) {
+        object[attribute] = newValue;
+    }
+    else if(isNaN(id))
+    {
+      object[attribute] = newValue;
+    }
+  }
+  return;
+}
+
+const readInputAttribute = (inputs, id, attribute) => {
+  let index = inputs.findIndex((input) => input.id === id);
+  return inputs[index][attribute];
+}
+
+const getFirstInputIdWithAttributeValue = (inputs,attribute,value,returnAttribute) => {
+  for (let object of inputs) {
+    if(object[attribute] === value)
+    {
+      return object[returnAttribute];
+    }
+  }
+}
+
 const InputReducer = (state, action) => {
   var index;
   let updatedState;
 
   switch (action.type) {
     
-    case 'CHANGE_INPUTTEXT':
+  case 'CHANGE_INPUTTEXT':
       index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+      inputs = state.inputs;
+      updateInputAttribute(inputs)      
       var updatedInput = update(state.inputs[index], {inputText: {$set: action.payload.wording.wording}});
       updatedState = {
                       ...state,
                       inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
                      };    
-    break;
+  break;
 
-    case 'ADD_INPUT':
+  case 'ADD_INPUT':
       updatedState = {
         ...state,
         inputs: [
@@ -23,18 +52,19 @@ const InputReducer = (state, action) => {
         { id: action.payload, inputText: "", isActive: false }
         ]
       };
-    break;
+  break;
 
-    case 'REMOVE_INPUT':
+  case 'REMOVE_INPUT':
       let updatedActiveInputs = state.activeInputs;
       updatedActiveInputs.delete(action.payload);
       updatedState = {
-                       activeInputs: updatedActiveInputs,
+                       ...state,
+                       activeInputs: updatedActiveInputs[],
                        inputs: state.inputs.filter(i => (i.id !== (action.payload)))
                     };
-    break;
+  break;
 
-    case 'ACTIVATE_SINGLEINPUT': // single click - activates just the one input
+  case 'ACTIVATE_SINGLEINPUT': // single click - activates just the one input
     index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
 
     var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
@@ -44,6 +74,7 @@ const InputReducer = (state, action) => {
     updatedState = {  ...state,  
       inputs: update(updatedStateInputs, {$splice: [[index, 1, updatedInput]]})
     };
+    console.log(updatedState.activeInputs);
     updatedState.activeInputs.clear();
     updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
   break;
@@ -54,6 +85,7 @@ const InputReducer = (state, action) => {
     updatedState = {  ...state,  
                       inputs: updatedStateInputs
                     };
+                    console.log(updatedState.activeInputs);
     updatedState.activeInputs.clear();
   break;
 
@@ -63,7 +95,8 @@ const InputReducer = (state, action) => {
     updatedState = {  ...state,  
                       inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
                     };
-    updatedState.activeInputs = updatedState.activeInputs.add(updatedInput.id);
+    console.log(updatedState.activeInputs);
+    updatedState.activeInputs = updatedState.activeInputs.push(updatedInput.id);
   break;
 
   case 'DEACTIVATE_INPUT':
@@ -72,31 +105,41 @@ const InputReducer = (state, action) => {
     updatedState = {  ...state,  
                         inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
                      };
-    updatedState.activeInputs = updatedState.activeInputs.delete(updatedInput.id);
+    console.log(updatedState.activeInputs);
+    updatedState.activeInputs = updatedState.activeInputs.delete(updatedInput.id); // not working
+  break;
+
+  case 'ACTIVATE_MULTIPLEINPUTS': // maybe split this into add active inputs and remove active inputs? -> one function = one target
+    index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+    var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
+    updatedState = {  ...state,  
+                      inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
+                    };
+    console.log(updatedState.activeInputs);
+    updatedState.activeInputs.add(updatedInput.id);
   break;
   
-    case 'ACTIVATE_MULTIPLEINPUTS': // maybe split this into add active inputs and remove active inputs? -> one function = one target
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: true}});
-      updatedState = {  ...state,  
+  case 'DEACTIVATE_MULTIPLEINPUTS':
+    index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+    var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
+    updatedState = {  ...state,  
                         inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
-                      };
-      updatedState.activeInputs.add(updatedInput.id);
-    break;
+                     };
+    console.log(updatedState.activeInputs);
+    updatedState.activeInputs.delete(updatedInput.id);
+  break;
 
-    case 'DEACTIVATE_MULTIPLEINPUTS':
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-      var updatedInput = update(state.inputs[index], {isActive: {$set: false}});
-      updatedState = {  ...state,  
-                          inputs: update(state.inputs, {$splice: [[index, 1, updatedInput]]})
-                       };
-      updatedState.activeInputs.delete(updatedInput.id);
-    break;
+  case 'ACTIVATE_ALLINPUTS':
+   let updatedInputs = state.inputs;
+   updatedInputs.forEach((i) => (i.isActive = true));
+   updatedState = {  ...state,  
+     inputs: updatedInputs
+   };
 
    default:
       updatedState = state;
    break;
-
+  
   }
     return updatedState;
 };

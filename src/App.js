@@ -38,11 +38,25 @@ export default function App() {
 
   // tracking key presses for keyboard shortcuts
   const handleKeyPress = useCallback((event) => {
-    if(event.key === 'Shift'){ setShiftKey(true); }else if(event.key === 'Control') { setCtrlKey(true); }
+    if(event.key === 'Shift')
+    { console.log("shift is true");
+      setShiftKey(true); }else if(event.key === 'Control')
+        { console.log("ctrl is true");
+        setCtrlKey(true)
+      }
+    else if (event.key === 'a' && ctrlKey === true) {
+      console.log("shift and a are true");
+      changeInputActivateAll();
+    }
   }, []);
 
   const handleKeyUp = useCallback((event) => {
-    if(event.key === 'Shift'){ setShiftKey(false); }else if(event.key === 'Control') { setCtrlKey(false); }
+    if(event.key === 'Shift'){ 
+      console.log("shift is false");
+      setShiftKey(false); }else if(event.key === 'Control') 
+      { 
+        console.log("ctrl is false");
+        setCtrlKey(false); }
   }, []);
 
   useEffect(() => {
@@ -72,6 +86,9 @@ export default function App() {
                                               {dispatch({ type: 'DEACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}})} 
                                               else{dispatch({ type: 'ACTIVATE_MULTIPLEINPUTS', payload: {input:{input}}})} 
                                             };
+  
+  const changeInputActivateAll = () =>  { {dispatch({ type: 'ACTIVATE_ALLINPUTS'})}};
+
   const changeInputActivateSingle = (input) =>  { if(input.isActive === true)
                                               {dispatch({ type: 'DEACTIVATE_SINGLEINPUT', payload: {input:{input}}})}
                                               else{dispatch({ type: 'ACTIVATE_SINGLEINPUT', payload: {input:{input}}})} 
