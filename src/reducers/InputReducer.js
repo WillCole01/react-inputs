@@ -1,6 +1,8 @@
-var update = require('immutability-helper');
+// var update = require('immutability-helper');
+import {updateInputAttributeFromId,updateInputAttributeFromIndex,getFirstInputIndexWithAttributeValue,
+        getFirstInputIdWithAttributeValue, readInputAttribute} from '../utils/ObjectArrayManipulationFunctions';
 
-const updateInputAttribute = (inputs, id=NaN, attribute, newValue) => {
+const updateInputAttributeFromId = (inputs, id=NaN, attribute, newValue) => {
   for (let object of inputs) {
     if (!isNaN(id) && object.id === id) {
         object[attribute] = newValue;
@@ -9,6 +11,22 @@ const updateInputAttribute = (inputs, id=NaN, attribute, newValue) => {
     {
       object[attribute] = newValue;
     }
+  }
+  return;
+}
+
+const updateInputAttributeFromIndex = (inputs, index=NaN, attribute, newValue) => {
+  let arrayIndex = 0;
+  for (let object of inputs) {
+    if (!isNaN(index) && arrayIndex === index) 
+    {
+        object[attribute] = newValue;
+    }
+    else if(isNaN(index))
+    {
+      object[attribute] = newValue;
+    }
+    arrayIndex++;
   }
   return;
 }
@@ -27,6 +45,17 @@ const getFirstInputIdWithAttributeValue = (inputs,attribute,value,returnAttribut
   }
 }
 
+const getFirstInputIndexWithAttributeValue = (inputs,attribute,value) => {
+  let i = 0;
+  for (let object of inputs) {
+    if(object[attribute] === value)
+    {
+      return i;
+    }
+    i++;
+  }
+}
+
 const InputReducer = (state, action) => {
   var index;
   let updatedState;
@@ -34,9 +63,9 @@ const InputReducer = (state, action) => {
   switch (action.type) {
     
   case 'CHANGE_INPUTTEXT':
-      index = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
+      index = getFirstInputIndexWithAttributeValue(state.inputs, id, action.payload.input.input.id);
       inputs = state.inputs;
-      updateInputAttribute(inputs)      
+      updateInputAttributeFromId(inputs)      
       var updatedInput = update(state.inputs[index], {inputText: {$set: action.payload.wording.wording}});
       updatedState = {
                       ...state,
