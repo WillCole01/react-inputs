@@ -25,7 +25,7 @@ export default function App() {
 
   const appState = {shiftKeyActive:false,
                     ctrltKeyActive:false,
-                    activeInputs: new Set([]),
+                    activatedOrder:{currentIndex:0,lastIndex:0},
                     inputs:[{ id: 1, inputText: "", isActive:false }]};
   const [state, dispatch] = useReducer(InputReducer, appState);
 
