@@ -2,85 +2,83 @@ import {updateInputAttributeFromId,updateInputAttributeFromIndex,getFirstInputIn
         getFirstInputIdWithAttributeValue, readInputAttribute} from '../utils/ObjectArrayManipulationFunctions';
 
 const InputReducer = (state, action) => {
-  let updatedState, i, activatedOrder, inputs, fromIndex, toIndex;
-  console.log(action.type);
+  
+  let updatedState, i, belowActive, aboveActive, inputs, origin;
+  
+  // console.log(action.type);
+  updatedState = {};
 
   switch (action.type) {
 
-  case 'CHANGE_INPUTTEXT':
-      i = getFirstInputIndexWithAttributeValue(state.inputs, id, action.payload.input.input.id);
+    case 'CHANGE_INPUTTEXT':
+        i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
+        inputs = state.inputs;
+        updateInputAttributeFromIndex(inputs,i,'inputText',action.payload.wording.wording);
+        updatedState = { ...state, inputs: inputs}; 
+    break;
+
+    case 'ACTIVATE_UNIQUE':
       inputs = state.inputs;
-      updateInputAttributeFromIndex(inputs,i,'inputText',action.payload.wording.wording);
+      origin = state.origin;
+      i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
+      origin = i;
+      inputs.forEach(function(part, index, arr) {arr[index].isActive = false;});
+      updateInputAttributeFromId(inputs,i,'isActive',true);
+      updatedState = { ...state, inputs: inputs, origin: origin, lastActive: origin}; 
+    break;
+
+    case 'DEACTIVATE_ALL':
+      inputs = state.inputs;
+      inputs.forEach(function(part, index, arr) {arr[index].isActive = false;});
+      updatedState = { ...state, inputs: inputs, origin: -1, lastActive:-1}; 
+    break;
+
+    case 'SELECT_UP':
+      inputs = state.inputs;
+      lastActive = state.lastActive;
+      if(state.origin != -1 && lastActive != 0 && lastActive != (state.origin + 1))
+      {
+        belowActive = readInputAttribute(inputs,lastActive,'isActive');
+        updateInputAttributeFromId(inputs,(lastActive-1),'isActive',(belowActive));
+        lastActive = lastActive - 1;
+      }
+      updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
+    break;
+
+    case 'SELECT_DOWN':
+      inputs = state.inputs;
+      lastActive=state.lastActive;
+      if(state.origin != -1 && lastActive < payload.topInputId && lastActive != (state.origin - 1))
+      {
+        aboveActive = readInputAttribute(inputs,lastActive,'isActive');
+        updateInputAttributeFromId(inputs,(lastActive+1),'isActive',(aboveActive));
+        lastActive = lastActive + 1;
+      }
+      updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
+    break;
+
+    case 'TOGGLE_INPUT': // single click - activates just the one input
+      inputs = state.inputs;
+      i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
+      acitvated = readInputAttribute(inputs,i,'isActive');
+      updateInputAttributeFromId(inputs,i,'isAcive',(!acitvated));
       updatedState = { ...state, inputs: inputs}; 
-  break;
+    break;
 
-  case 'ADD_INPUT':
-      updatedState = { ...state, inputs: [ ...state.inputs, { id: action.payload, inputText: "", isActive: false } ]};
-  break;
+    case 'ADD_INPUT':
+        updatedState = { ...state, inputs: [ ...state.inputs, { id: action.payload, inputText: "", isActive: false } ]};
+    break;
 
-  case 'REMOVE_INPUT':
-      updatedState = {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload)))};
-  break;
+    case 'REMOVE_INPUT':
+        updatedState = {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload)))};
+    break;
 
-  case 'ACTIVATE_SINGLEINPUT': // single click - activates just the one input
-    i = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-    inputs = state.inputs;
-    inputs.forEach(i => (i.isActive = false));
-    activatedOrder = state.activatedOrder;
-    activatedOrder['currentIndex']=i; activatedOrder['lastIndex']= 0;
-    updateInputAttributeFromIndex(inputs,i,'isActive',true);
-    // updateInputAttributeFromIndex(inputs,index,'lastActive',true);
-    updatedState = {  ...state, activatedOrder: activatedOrder, inputs: inputs};
-  break;
-
-  case 'ACTIVATE_INPUT': // single click - activates just the one input
-    i = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-    inputs = state.inputs;
-    activatedOrder = state.activatedOrder;
-    activatedOrder['lastIndex']= state.activatedOrder.currentIndex;activatedOrder['currentIndex']=i;
-    updateInputAttributeFromIndex(inputs,i,'isActive',true);
-    // updateInputAttributeFromIndex(inputs,index,'lastActive',true);
-    updatedState = {  ...state, inputs: inputs};
-  break;
-
-  case 'DEACTIVATE_INPUT':
-    i = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-    inputs = state.inputs;
-    activatedOrder = state.activatedOrder;
-    activatedOrder['lastIndex']= 0;activatedOrder['currentIndex']=0;
-    updateInputAttributeFromIndex(inputs,i,'isActive',false);
-    updatedState = {  ...state, inputs: inputs};
-  break;
-
-  case 'ACTIVATE_MULTIPLEINPUTS': // maybe split this into add active inputs and remove active inputs? -> one function = one target
-    i = state.inputs.findIndex((inp) => inp.id === action.payload.input.input.id);
-    activatedOrder = state.activatedOrder;
-    inputs = state.inputs;
-    fromIndex = Math.min(i, activatedOrder['currentIndex']) + 1;
-    toIndex   =  Math.max(i, activatedOrder['currentIndex']) + 1;
-    inputs.forEach(function(input, index) {
-                    if(input['id'] <= fromIndex && input['id'] >= toIndex){input["isActive"] = true;} 
-                  }, inputs);
-    activatedOrder['lastIndex']= activatedOrder['currentIndex'];activatedOrder['currentIndex']=i;
-    updatedState = {  ...state,activatedOrder: activatedOrder, inputs: inputs};
-  break;
-
-  case 'DEACTIVATE_ALLINPUTS':
-    inputs = state.inputs;
-    inputs.forEach(i => (i.isActive = false));
-    updatedState = {  ...state,activatedOrder:{lastIndex:0,currentIndex:0}, inputs: inputs};
-  break;
-
-  case 'ACTIVATE_ALLINPUTS':
-   inputs = state.inputs;
-   inputs.forEach((i) => (i.isActive = true));
-   updatedState = {  ...state,activatedOrder:{lastIndex:0,currentIndex:0}, inputs: inputs};
-
-   default:
-      updatedState = state;
-   break;
-  
+    default:
+        updatedState = state;
+    break;
+    
   }
+
     return updatedState;
 };
 

@@ -44,12 +44,12 @@ const useKeyboardShortcut = (shortcutKeys, callback) => {
         const { key, target } = keyupEvent;    
         if (blacklistedTargets.includes(target.tagName)) return;    
         if (!shortcutKeys.includes(key)) return;    
-    ‍
+        
         if (keys[key])            setKeys({ type: "set-key-up", key });  
       },  
       [shortcutKeys, keys]);
 
-    const useEffect(() => {  
+    useEffect(() => {  
         if (!Object.values(keys).filter(value => !value).length) callback(keys)}, [callback, keys]);
 };
 export default useKeyboardShortcut;

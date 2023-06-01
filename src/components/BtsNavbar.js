@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
+import { NavLink } from 'react-router-dom';
 
 function BtsNavbar() {
   return (
@@ -17,11 +18,11 @@ function BtsNavbar() {
                 Run inputs
               </NavDropdown.Item>
             </NavDropdown> 
-            <Nav.Link href="#home">Calc Builder</Nav.Link>
-            <Nav.Link href="#home">Filter Groups</Nav.Link>
-            <Nav.Link href="#home">Nodes</Nav.Link>
-            <Nav.Link href="#home">Question Mapper</Nav.Link>
-            <Nav.Link href="#link">Model</Nav.Link>
+            <NavLink to="../Calcs.js">Calc Builder</NavLink>
+            <NavLink to="#FilterGroups">Filter Groups</NavLink>
+            <NavLink to="#Nodes">Nodes</NavLink>
+            <NavLink to="#QuestionMapper">Question Mapper</NavLink>
+            <NavLink to="#Model">Model</NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>

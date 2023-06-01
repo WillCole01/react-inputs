@@ -1,6 +1,11 @@
+// import { useReducer } from "react";
 import InputList from "./InputList";
+// import { withHotKeys } from 'react-hotkeys';
+// import InputReducer from "../reducers/InputReducer"; 
 
-const ScrollBox = ({ inputs, changeInput, handleClick, lister }) => {
+const ScrollBox = ({ inputs, changeInput, handleClick, lister}) => {
+  
+  
   return (
     <div className="overflow-auto ScrollBox">
         <InputList inputs={inputs} changeInput={changeInput} handleClick={handleClick} lister={lister}/>
@@ -8,4 +13,5 @@ const ScrollBox = ({ inputs, changeInput, handleClick, lister }) => {
   );
 };
 
+// export default withHotKeys(ACTION_KEY_MAP)(ScrollBox);
 export default ScrollBox;
