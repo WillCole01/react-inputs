@@ -1,29 +1,42 @@
-import Calcs from './Calcs';
-import FilterGroups from "./FilterGroups.js";
-import Model from "./Model.js";
-import QuestionMapper from "./QuestionMapper.js";
-import Nodes from "./Nodes.js";
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import {Route, Routes} from 'react-router-dom';
+// Running app state
+// import {appState} from './appState';
+
+// Component wrappers
+import CalcsWrapper from './pages/CalcsWrapper';
+import FilterGroups from "./pages/FilterGroups.js";
+import Model from "./pages/Model.js";
+import QuestionMapper from "./pages/QuestionMapper.js";
+import Nodes from "./pages/Nodes.js";
+
+import { Routes, Route,} from 'react-router-dom';
 import BtsNavbar from './components/BtsNavbar';
-import { Container, Row } from 'react-bootstrap'; //
+import { Container, Row } from 'react-bootstrap';
 
 const App = () => {
+
    return ( <>
-         {/* <BrowserRouter/> */}
+      <React.StrictMode>
          <Container>
             <Row>
-                 <BtsNavbar /> 
+               <BtsNavbar /> 
             </Row>
-            <Routes>
-              <Route path="/" Component={Model}/>
-              <Route path="/Calcs" Component={Calcs}/>
-              <Route path="/FilterGroups" Component={FilterGroups}/>
-              <Route path="/Nodes" Component={Nodes}/>
-              <Route path="/QuestionMapper" Component={QuestionMapper}/>
+
+            {/* <Router> */}
+            <Routes> 
+                  <Route path="/"  Component={Model}/> 
+                  <Route path="/Calcs"  Component={CalcsWrapper}/> 
+                  <Route path="/FilterGroups"  Component={FilterGroups}/>
+                  <Route path="/Nodes"  Component={Nodes}/>
+                  <Route path="/QuestionMapper" Component={QuestionMapper}/>
             </Routes>
-            {/* <Calcs/> */}
+            {/* </Router> */}
+
          </Container>
+   </React.StrictMode>
+
    </>);
 };
 

@@ -7,7 +7,6 @@ const InputReducer = (state, action) => {
   
   // console.log(action.type);
   updatedState = {};
-
   switch (action.type) {
 
     case 'CHANGE_INPUTTEXT':
@@ -18,12 +17,11 @@ const InputReducer = (state, action) => {
     break;
 
     case 'ACTIVATE_UNIQUE':
+      i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
       inputs = state.inputs;
-      origin = state.origin;
-      i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
       origin = i;
       inputs.forEach(function(part, index, arr) {arr[index].isActive = false;});
-      updateInputAttributeFromId(inputs,i,'isActive',true);
+      updateInputAttributeFromIndex(inputs,i,'isActive',true);
       updatedState = { ...state, inputs: inputs, origin: origin, lastActive: origin}; 
     break;
 
@@ -76,9 +74,7 @@ const InputReducer = (state, action) => {
     default:
         updatedState = state;
     break;
-    
   }
-
     return updatedState;
 };
 

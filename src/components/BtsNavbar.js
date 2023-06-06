@@ -2,16 +2,15 @@
 // import Container from 'react-bootstrap/Container';
 // import  from 'react-bootstrap/NavDropdown';
 import {Navbar,Nav,Container, NavDropdown } from 'react-bootstrap';
-import {Route, Routes} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
-import Calcs from "../Calcs.js";
-import FilterGroups from "../FilterGroups.js";
-import Model from "../Model.js";
-import QuestionMapper from "../QuestionMapper.js";
-import Nodes from "../Nodes.js";
+// import Calcs from "../pages/Calcs.js";
+// import FilterGroups from "../pages/FilterGroups.js";
+// import Model from "../pages/Model.js";
+// import Nodes from "../pages/Nodes.js";
+// import QuestionMapper from "../pages/QuestionMapper.js";
 
-
-function BtsNavbar() {
+const BtsNavbar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>

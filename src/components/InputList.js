@@ -12,6 +12,7 @@ const InputList = ({ inputs, changeInput, handleClick, lister }) => {
       </li>
     );
   };
+  
   return (<ul>
               {
                 inputs.map((x) => (renderInput(x,  changeInput, handleClick )))
