@@ -1,20 +1,10 @@
-// import  from 'react-bootstrap/Nav';
-// import Container from 'react-bootstrap/Container';
-// import  from 'react-bootstrap/NavDropdown';
-import {Navbar,Nav,Container, NavDropdown } from 'react-bootstrap';
-import {Link} from 'react-router-dom';
-
-// import Calcs from "../pages/Calcs.js";
-// import FilterGroups from "../pages/FilterGroups.js";
-// import Model from "../pages/Model.js";
-// import Nodes from "../pages/Nodes.js";
-// import QuestionMapper from "../pages/QuestionMapper.js";
+import {Navbar,Nav,Container, NavDropdown, Button } from 'react-bootstrap';
 
 const BtsNavbar = () => {
   return (
     <Navbar bg="light" expand="lg">
       <Container>
-        <Navbar.Brand href="#home">Model Builder</Navbar.Brand>
+        <Navbar.Brand href="/">Model Builder</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         
         <Navbar.Collapse id="basic-navbar-nav">
@@ -27,11 +17,16 @@ const BtsNavbar = () => {
 
             <Nav.Link href="/">Model</Nav.Link>
             <Nav.Link href="/Calcs">Calcs</Nav.Link>
-            <Nav.Link path="/FilterGroups">FilterGroups</Nav.Link>
-            <Nav.Link path="/Nodes">Nodes</Nav.Link>
-            <Nav.Link path="/QuestionMapper">Question Mapper</Nav.Link>
-          
+            <Nav.Link href="/FilterGroups">FilterGroups</Nav.Link>
+            <Nav.Link href="/Nodes">Nodes</Nav.Link>
+            <Nav.Link href="/QuestionMapper">Question Mapper</Nav.Link>
+
           </Nav>
+          
+          <Button variant="outline-success">
+            <Nav.Link href="/Auth">Log In</Nav.Link>
+          </Button>
+
         </Navbar.Collapse>
       </Container>
     </Navbar>

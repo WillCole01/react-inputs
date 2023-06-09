@@ -10,6 +10,7 @@ import FilterGroups from "./pages/FilterGroups.js";
 import Model from "./pages/Model.js";
 import QuestionMapper from "./pages/QuestionMapper.js";
 import Nodes from "./pages/Nodes.js";
+import Authenticate from './pages/Authenticate.js';
 
 import { Routes, Route,} from 'react-router-dom';
 import BtsNavbar from './components/BtsNavbar';
@@ -31,6 +32,7 @@ const App = () => {
                   <Route path="/FilterGroups"  Component={FilterGroups}/>
                   <Route path="/Nodes"  Component={Nodes}/>
                   <Route path="/QuestionMapper" Component={QuestionMapper}/>
+                  <Route path="/Auth" Component={Authenticate}/>
             </Routes>
             {/* </Router> */}
 

@@ -3,9 +3,7 @@ import {updateInputAttributeFromId,updateInputAttributeFromIndex,getFirstInputIn
 
 const InputReducer = (state, action) => {
   
-  let updatedState, i, belowActive, aboveActive, inputs, origin;
-  
-  // console.log(action.type);
+  let updatedState, lastActive, i, inputs, origin;
   updatedState = {};
   switch (action.type) {
 
@@ -20,38 +18,41 @@ const InputReducer = (state, action) => {
       i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
       inputs = state.inputs;
       origin = i;
-      inputs.forEach(function(part, index, arr) {arr[index].isActive = false;});
+      inputs.forEach((part, index, arr) => {arr[index].isActive = false});
       updateInputAttributeFromIndex(inputs,i,'isActive',true);
       updatedState = { ...state, inputs: inputs, origin: origin, lastActive: origin}; 
     break;
 
     case 'DEACTIVATE_ALL':
       inputs = state.inputs;
-      inputs.forEach(function(part, index, arr) {arr[index].isActive = false;});
+      inputs.forEach((part, index, arr) => {arr[index].isActive = false});
       updatedState = { ...state, inputs: inputs, origin: -1, lastActive:-1}; 
     break;
 
     case 'SELECT_UP':
       inputs = state.inputs;
       lastActive = state.lastActive;
-      if(state.origin != -1 && lastActive != 0 && lastActive != (state.origin + 1))
-      {
-        belowActive = readInputAttribute(inputs,lastActive,'isActive');
-        updateInputAttributeFromId(inputs,(lastActive-1),'isActive',(belowActive));
-        lastActive = lastActive - 1;
-      }
+
+      if(0 < lastActive && lastActive < state.origin)
+      { updateInputAttributeFromIndex(inputs,(lastActive- 1),'isActive',false)}
+      else 
+      { updateInputAttributeFromIndex(inputs,(lastActive-1),'isActive',true)}
+      lastActive = lastActive - 1;
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
     break;
 
     case 'SELECT_DOWN':
       inputs = state.inputs;
-      lastActive=state.lastActive;
-      if(state.origin != -1 && lastActive < payload.topInputId && lastActive != (state.origin - 1))
+      lastActive = state.lastActive;
+      if(lastActive < (action.payload - 1))
       {
-        aboveActive = readInputAttribute(inputs,lastActive,'isActive');
-        updateInputAttributeFromId(inputs,(lastActive+1),'isActive',(aboveActive));
-        lastActive = lastActive + 1;
-      }
+        if(lastActive < state.origin)
+        {updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',false);
+         lastActive = lastActive + 1;}
+        else 
+        { updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',true);
+          lastActive = lastActive + 1;}
+        }
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
     break;
 
