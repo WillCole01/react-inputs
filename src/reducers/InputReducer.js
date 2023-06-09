@@ -1,5 +1,6 @@
 import {updateInputAttributeFromId,updateInputAttributeFromIndex,getFirstInputIndexWithAttributeValue,
         getFirstInputIdWithAttributeValue, readInputAttribute} from '../utils/ObjectArrayManipulationFunctions';
+import { saveToLocalStorage } from '../utils/LocalStorage';
 
 const InputReducer = (state, action) => {
   
@@ -55,7 +56,12 @@ const InputReducer = (state, action) => {
         }
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
     break;
-
+    
+    case 'CLEAR_ALL':
+        updatedState = { inputs: [{ id: 1, inputText: "", isActive: false }], origin: -1,lastActive: -1};
+        saveToLocalStorage('inputs', undefined);
+    break;
+    
     case 'TOGGLE_INPUT': // single click - activates just the one input
       inputs = state.inputs;
       i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
