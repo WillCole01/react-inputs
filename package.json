@@ -16,8 +16,9 @@
     "react-bootstrap": "^2.7.2",
     "react-dom": "18.2.0",
     "react-error-overlay": "6.0.9",
+    "react-pdf": "^7.1.1",
     "react-script-tag": "^1.1.2",
-    "react-scripts": "4.0.0",
+    "react-scripts": "^5.0.1",
     "reactstrap": "^9.1.6"
   },
   "devDependencies": {

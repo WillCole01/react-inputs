@@ -21,6 +21,11 @@ const BtsNavbar = () => {
             <Nav.Link href="/Nodes">Nodes</Nav.Link>
             <Nav.Link href="/QuestionMapper">Question Mapper</Nav.Link>
 
+            <NavDropdown title="Help" id="basic-nav-dropdown">
+              <NavDropdown.Item href="/Shortcuts">Keyboard shortcuts reference</NavDropdown.Item>
+              <NavDropdown.Item href="#action/3.2">Q&A</NavDropdown.Item>
+            </NavDropdown> 
+
           </Nav>
           
           <Button variant="outline-success">

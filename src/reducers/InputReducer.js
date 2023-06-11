@@ -34,26 +34,43 @@ const InputReducer = (state, action) => {
       inputs = state.inputs;
       lastActive = state.lastActive;
 
-      if(0 < lastActive && lastActive < state.origin)
-      { updateInputAttributeFromIndex(inputs,(lastActive- 1),'isActive',false)}
-      else 
-      { updateInputAttributeFromIndex(inputs,(lastActive-1),'isActive',true)}
-      lastActive = lastActive - 1;
+      if(lastActive === 0)
+      {
+          updateInputAttributeFromIndex(inputs,lastActive,'isActive',true);
+      }
+      else if(0 < lastActive && lastActive <= state.origin)
+      { 
+          lastActive = lastActive - 1;  
+          updateInputAttributeFromIndex(inputs,lastActive,'isActive',true);
+      }
+      else if(state.origin < lastActive && lastActive <= inputs.length)
+      {
+          updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+          lastActive = lastActive - 1;
+      }
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
     break;
 
     case 'SELECT_DOWN':
       inputs = state.inputs;
       lastActive = state.lastActive;
-      if(lastActive < (action.payload - 1))
+      
+      if(0 === lastActive)
       {
-        if(lastActive < state.origin)
-        {updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',false);
-         lastActive = lastActive + 1;}
-        else 
-        { updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',true);
-          lastActive = lastActive + 1;}
-        }
+        updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+        lastActive = lastActive + 1;
+      }
+      else if(0 < lastActive && lastActive < state.origin)
+      {
+        updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+        lastActive = lastActive + 1;
+      }
+      else if(state.origin <= lastActive && lastActive < (inputs.length - 1))
+      { 
+        updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',true);
+        lastActive = lastActive + 1;
+      }
+
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
     break;
     
@@ -61,7 +78,7 @@ const InputReducer = (state, action) => {
         updatedState = { inputs: [{ id: 1, inputText: "", isActive: false }], origin: -1,lastActive: -1};
         saveToLocalStorage('inputs', undefined);
     break;
-    
+
     case 'TOGGLE_INPUT': // single click - activates just the one input
       inputs = state.inputs;
       i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
@@ -75,7 +92,7 @@ const InputReducer = (state, action) => {
     break;
 
     case 'REMOVE_INPUT':
-        updatedState = {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload)))};
+          updatedState = (action.payload > 1) ? {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload)))} : {...state};
     break;
 
     default:

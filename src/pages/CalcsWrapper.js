@@ -47,11 +47,14 @@ const hotkeymap = {  'addInput': 'alt+a',
                      'runAll': 'ctrl+enter'
                   };
  const changeInput = (input, wording) =>  { dispatch({ type: 'CHANGE_INPUTTEXT', payload: {input:{input}, wording:{wording}}}) };
- const inputActivate = (input) =>  { if(input.id === inputs.origin) 
-                                        {dispatch({ type: 'DEACTIVATE_ALL', payload: {input:{input}}});}
+ const inputActivate = (input) =>  { if(input.id === state.inputs.origin && state.inputs.filter(x => x.isActive === true).length === 1)
+                                        {
+                                          dispatch({ type: 'DEACTIVATE_ALL', payload: {input:{input}}});
+                                        }
                                       else
-                                        {dispatch({ type: 'ACTIVATE_UNIQUE', payload: {input:{input}}})}};
-  // <Beforeunload onBeforeunload={() => { saveToLocalStorage('inputs', inputs) } } />
+                                        {
+                                          dispatch({ type: 'ACTIVATE_UNIQUE', payload: {input:{input}}})}
+                                        };
 
   return (
     <HotKeys keyMap={hotkeymap} handlers={hotkeyhandler}>
