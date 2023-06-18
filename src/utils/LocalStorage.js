@@ -1,3 +1,6 @@
+import { useRef, useEffect } from 'react';
+import partial  from "lodash/partial";
+
 const saveToLocalStorage = (storageItemName, state) => {
   try {
     localStorage.setItem(storageItemName, JSON.stringify(state));
@@ -16,4 +19,18 @@ const loadFromLocalStorage = (storageItemName) => {
   }
 };
 
-export { loadFromLocalStorage,  saveToLocalStorage};
+const useUnload = (fn, state) => {
+  const funct = partial(fn, state);
+  const cb = useRef(funct);
+
+  useEffect(() => {
+    const onUnload = cb.current;
+    
+    window.addEventListener('beforeunload', onUnload);
+    return () => {
+      window.removeEventListener('beforeunload', onUnload);
+    };
+  }, []);
+};
+
+export { loadFromLocalStorage,  saveToLocalStorage, useUnload};

@@ -20,9 +20,7 @@ const Calcs = ({inputs, changeInput, inputActivate}) => {
   const w = new WordParser();
   const l = new Lister(w, componentArguments, grammars );
 
-  const handleChangeInput = (input, wording) =>  { 
-                                                  changeInput(input, wording)
-                                                };
+  const handleChangeInput = (input, wording) =>  { changeInput(input, wording) };
   const handleInputActivate = (input) =>  { inputActivate(input) };
 
   return (

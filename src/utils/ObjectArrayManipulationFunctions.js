@@ -12,19 +12,8 @@ export const updateInputAttributeFromId = (inputs, id=NaN, attribute, newValue) 
     return;
   }
   
-  export const updateInputAttributeFromIndex = (inputs, index=NaN, attribute, newValue) => {
-    let arrayIndex = 0;
-    for (let object of inputs) {
-      if (!isNaN(index) && arrayIndex === index) 
-      {
-          object[attribute] = newValue;
-      }
-      else if(isNaN(index))
-      {
-        object[attribute] = newValue;
-      }
-      arrayIndex++;
-    }
+  export const updateInputAttributeFromIndex = (inputs, index, attribute, newValue) => {
+    inputs[index][attribute] = newValue;
     return;
   }
   

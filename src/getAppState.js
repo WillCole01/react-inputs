@@ -12,3 +12,6 @@ export const appState = {
     FilterGroups: {},
     QuestionMapper: {}
 };
+
+export default appState;
+// export const getAppState = (section) =>  {return appState[section]};

@@ -9,18 +9,18 @@ const InputReducer = (state, action) => {
   switch (action.type) {
 
     case 'CHANGE_INPUTTEXT':
-        i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
         inputs = state.inputs;
-        updateInputAttributeFromIndex(inputs,i,'inputText',action.payload.wording.wording);
+        inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.inputText = action.payload.wording.wording: i);
         updatedState = { ...state, inputs: inputs}; 
     break;
 
     case 'ACTIVATE_UNIQUE':
-      i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
+      // i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
       inputs = state.inputs;
       origin = i;
-      inputs.forEach((part, index, arr) => {arr[index].isActive = false});
-      updateInputAttributeFromIndex(inputs,i,'isActive',true);
+      inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.isActive = true : i.isActive = false);
+      // inputs.forEach((part, index, arr) => {arr[index].isActive = false});
+      // updateInputAttributeFromIndex(inputs,i,'isActive',true);
       updatedState = { ...state, inputs: inputs, origin: origin, lastActive: origin}; 
     break;
 
@@ -33,7 +33,6 @@ const InputReducer = (state, action) => {
     case 'SELECT_UP':
       inputs = state.inputs;
       lastActive = state.lastActive;
-
       if(lastActive === 0)
       {
           updateInputAttributeFromIndex(inputs,lastActive,'isActive',true);
@@ -81,14 +80,13 @@ const InputReducer = (state, action) => {
 
     case 'TOGGLE_INPUT': // single click - activates just the one input
       inputs = state.inputs;
-      i = getFirstInputIndexWithAttributeValue(inputs, 'id', action.payload.input.input.id);
-      acitvated = readInputAttribute(inputs,i,'isActive');
-      updateInputAttributeFromId(inputs,i,'isAcive',(!acitvated));
+      inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.isActive = !(i.isActive): i.isActive = false);
       updatedState = { ...state, inputs: inputs}; 
     break;
 
     case 'ADD_INPUT':
         updatedState = { ...state, inputs: [ ...state.inputs, { id: action.payload, inputText: "", isActive: false } ]};
+        
     break;
 
     case 'REMOVE_INPUT':
@@ -99,6 +97,7 @@ const InputReducer = (state, action) => {
         updatedState = state;
     break;
   }
+    saveToLocalStorage('Calcs',updatedState);
     return updatedState;
 };
 
