@@ -4,7 +4,8 @@ import  { Form }  from 'react-bootstrap';
 import  Dropdown  from './Dropdown';
 import { Card, CardBody } from "reactstrap";
 import { useState } from "react";
-
+import { HotKeys } from "react-hotkeys";
+import {HotKeysPreventDefaults} from '../utils/HotkeysPreventDefaults';
 
 var countries = ["Afghanistan","Albania","Algeria","Andorra","Angola","Anguilla","Antigua &amp; Barbuda","Argentina","Armenia","Aruba",
 "Australia","Austria","Azerbaijan","Bahamas","Bahrain","Bangladesh","Barbados","Belarus","Belgium","Belize","Benin","Bermuda","Bhutan","Bolivia",
@@ -59,6 +60,19 @@ const BtsInput = ({input, changeInput, handleClick}) => {
     }
   }
 
+  const hotkeyhandler = HotKeysPreventDefaults({
+    'optionSelect': ()  => {   console.log('optionSelect'); },
+    'nextDropdown': () => {  console.log('nextDropdown'); },
+    'selectOption': () => { console.log('selectOption'); },
+    'selectUp':() => {console.log('selectUp');},
+    'selectDown': () => { console.log('selectDown'); } });
+
+const hotkeymap = {'optionSelect': 'leftBracket',
+                   'nextDropdown':'fullStop',
+                   'selectOption': 'Enter',
+                   'selectUp': 'ArrowUp',
+                   'selectDown': 'ArrowDown'};
+
   const handleTextInput = (text) => 
   {
     if(text.length == 0)
@@ -100,6 +114,7 @@ const BtsInput = ({input, changeInput, handleClick}) => {
                   className={(input.isActive === true) ? "active-card" : "inactive-card"}>
 
           <Form.Group id={input.id} className="mb-3" controlId="formBasicText" >
+          <HotKeys keyMap={hotkeymap} handlers={hotkeyhandler}>
             <Form.Control placeholder="Calc"
                           key={input.id}
                           onClick={(e) => {e.stopPropagation()}}
@@ -108,7 +123,7 @@ const BtsInput = ({input, changeInput, handleClick}) => {
                           value={input.inputText}
                           autoComplete="off"
                           />
-
+          </HotKeys>
               <Form.Text className="text-muted" >
               </Form.Text>
           </Form.Group>

@@ -1,4 +1,5 @@
 import BtsInput from "./BtsInput";
+// new local hotkeys to deal with intellisense in calcs + conversion to json
 
 const InputList = ({ inputs, changeInput, handleClick, lister }) => {
   
@@ -8,7 +9,9 @@ const InputList = ({ inputs, changeInput, handleClick, lister }) => {
   const renderInput = (input, changeInput, handleClick) => {
     return (
       <li key={input.id}>
-           <BtsInput input={input} changeInput={changeInput} handleClick={handleClick} initialWordList={initialWordList}/>
+        {/* <HotKeys keyMap={hotkeymap} handlers={hotkeyhandler}> */}
+            <BtsInput input={input} changeInput={changeInput} handleClick={handleClick} initialWordList={initialWordList}/>
+        {/* </HotKeys> */}
       </li>
     );
   };
