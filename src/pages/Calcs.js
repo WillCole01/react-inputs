@@ -1,7 +1,6 @@
 import "../styles.css";
 import {React } from "react"; //useCallback,useState,
 import {Row, Col } from 'react-bootstrap'; //Containers
-import  {WordParser, Lister} from '../utils/CalcAutocompletion.js';
 
 // autocomplete data
 import '../utils/Globals.js';
@@ -16,10 +15,6 @@ const Calcs = ({inputs, changeInput, inputActivate}) => {
   // init app data 
   const RunInformationData = {"Manager":"GSAM", "Product": "Equity Global", "AsAtDate":"2015-01-01"};
 
-  // helper objects => expanding inputs
-  const w = new WordParser();
-  const l = new Lister(w, componentArguments, grammars );
-
   const handleChangeInput = (input, wording) =>  { changeInput(input, wording) };
   const handleInputActivate = (input) =>  { inputActivate(input) };
 
@@ -31,7 +26,7 @@ const Calcs = ({inputs, changeInput, inputActivate}) => {
           <Col md={12}>
             <Row className="fluid full" >
               <Col md={9}>
-                    <ScrollBox inputs={inputs} changeInput={handleChangeInput} handleClick={handleInputActivate} lister={l}/>
+                    <ScrollBox inputs={inputs} changeInput={handleChangeInput} handleClick={handleInputActivate}/>
               </Col>
         
               <Col md={3}>

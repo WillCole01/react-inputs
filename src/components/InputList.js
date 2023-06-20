@@ -1,17 +1,17 @@
 import BtsInput from "./BtsInput";
-// new local hotkeys to deal with intellisense in calcs + conversion to json
+import  {WordParser, Lister} from '../utils/CalcAutocompletion';
+import {grammars,argument_mappings} from '../utils/AutocompleteData';
 
-const InputList = ({ inputs, changeInput, handleClick, lister }) => {
+const InputList = ({ inputs, changeInput, handleClick}) => {
   
-  const getWordList = (input) => {lister.getWordList(input.inputText)};
-  const initialWordList = lister.getInitialList();
-
+  // helper objects => expanding inputs
+  const w = new WordParser();
+  const l = new Lister(w, argument_mappings, grammars );
+  
   const renderInput = (input, changeInput, handleClick) => {
     return (
       <li key={input.id}>
-        {/* <HotKeys keyMap={hotkeymap} handlers={hotkeyhandler}> */}
-            <BtsInput input={input} changeInput={changeInput} handleClick={handleClick} initialWordList={initialWordList}/>
-        {/* </HotKeys> */}
+            <BtsInput input={input} changeInput={changeInput} handleClick={handleClick} lister={l} parser={w}/>
       </li>
     );
   };

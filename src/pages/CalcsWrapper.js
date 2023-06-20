@@ -5,7 +5,7 @@ import { HotKeys } from "react-hotkeys";
 import UnmountCalcs from '../components/UnmountCalcs'
 import {HotKeysPreventDefaults} from '../utils/HotkeysPreventDefaults';
 import { saveToLocalStorage, loadFromLocalStorage} from '../utils/LocalStorage';
-import appState from "../getAppState" ;
+import { appState } from "../getAppState" ;
 import  partial from 'lodash/partial';
 
 

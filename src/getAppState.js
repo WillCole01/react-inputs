@@ -13,5 +13,5 @@ export const appState = {
     QuestionMapper: {}
 };
 
-export default appState;
+// export default appState;
 // export const getAppState = (section) =>  {return appState[section]};
