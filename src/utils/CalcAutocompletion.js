@@ -200,7 +200,7 @@ import React from "react";
 
       //returns attributes based on '.' as last character // from grammars
       getNextAttribute = (expression, index) => {
-        grammarsFiltered = this.getMatchGrammars(expression);
+        const grammarsFiltered = this.getMatchGrammars(expression);
         let dLength = Object.keys(grammarsFiltered).length;
         let tokens = [];
 

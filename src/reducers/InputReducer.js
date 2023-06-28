@@ -8,43 +8,46 @@ const InputReducer = (state, action) => {
   updatedState = {};
   switch (action.type) {
 
+    case 'FOCUS_INPUT':
+      inputs = state.inputs;
+      inputs.forEach( i => i['id'] === action.payload.input.input.id ? i['isFocused'] = true : i['isFocused'] = false );
+      updatedState = { ...state, inputs: inputs};
+    break;
+
     case 'CHANGE_INPUTTEXT':
         inputs = state.inputs;
-        inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.inputText = action.payload.wording.wording: i);
+        inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.inputText = action.payload.input.input.wording: i);
         updatedState = { ...state, inputs: inputs}; 
     break;
 
     case 'ACTIVATE_UNIQUE':
-      // i = getFirstInputIndexWithAttributeValue(state.inputs, 'id', action.payload.input.input.id);
       inputs = state.inputs;
-      origin = i;
+      origin = action.payload.input.input.id;
       inputs.forEach( i => i['id'] === action.payload.input.input.id ? i.isActive = true : i.isActive = false);
-      // inputs.forEach((part, index, arr) => {arr[index].isActive = false});
-      // updateInputAttributeFromIndex(inputs,i,'isActive',true);
       updatedState = { ...state, inputs: inputs, origin: origin, lastActive: origin}; 
     break;
 
     case 'DEACTIVATE_ALL':
       inputs = state.inputs;
-      inputs.forEach((part, index, arr) => {arr[index].isActive = false});
+      inputs.forEach((_, index, arr) => {arr[index].isActive = false});
       updatedState = { ...state, inputs: inputs, origin: -1, lastActive:-1}; 
     break;
 
     case 'SELECT_UP':
       inputs = state.inputs;
       lastActive = state.lastActive;
-      if(lastActive === 0)
+      if(lastActive === 1)
       {
-          updateInputAttributeFromIndex(inputs,lastActive,'isActive',true);
+        updateInputAttributeFromId(inputs,lastActive,'isActive',true);
       }
-      else if(0 < lastActive && lastActive <= state.origin)
+      else if(1 < lastActive && lastActive <= state.origin)
       { 
           lastActive = lastActive - 1;  
-          updateInputAttributeFromIndex(inputs,lastActive,'isActive',true);
+          updateInputAttributeFromId(inputs,lastActive,'isActive',true);
       }
       else if(state.origin < lastActive && lastActive <= inputs.length)
       {
-          updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+        updateInputAttributeFromId(inputs,lastActive,'isActive',false);
           lastActive = lastActive - 1;
       }
       updatedState = { ...state, inputs: inputs,lastActive:lastActive}; 
@@ -54,19 +57,24 @@ const InputReducer = (state, action) => {
       inputs = state.inputs;
       lastActive = state.lastActive;
       
-      if(0 === lastActive)
+      if(lastActive === 1 && 1 < state.origin)
       {
-        updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+        updateInputAttributeFromId(inputs,lastActive,'isActive',false);
         lastActive = lastActive + 1;
       }
-      else if(0 < lastActive && lastActive < state.origin)
+      else if(lastActive === 1 && state.origin === 1)
       {
-        updateInputAttributeFromIndex(inputs,lastActive,'isActive',false);
+        lastActive = lastActive + 1;
+        updateInputAttributeFromId(inputs,lastActive,'isActive',true);
+      }
+      else if(1 < lastActive && lastActive < state.origin)
+      {
+        updateInputAttributeFromId(inputs,lastActive,'isActive',false);
         lastActive = lastActive + 1;
       }
-      else if(state.origin <= lastActive && lastActive < (inputs.length - 1))
+      else if(state.origin <= lastActive && lastActive < (inputs.length))
       { 
-        updateInputAttributeFromIndex(inputs,(lastActive+1),'isActive',true);
+        updateInputAttributeFromId(inputs,(lastActive+1),'isActive',true);
         lastActive = lastActive + 1;
       }
 
@@ -85,19 +93,34 @@ const InputReducer = (state, action) => {
     break;
 
     case 'ADD_INPUT':
-        updatedState = { ...state, inputs: [ ...state.inputs, { id: action.payload, inputText: "", isActive: false } ]};
+        updatedState = { ...state, inputs: [ ...state.inputs, { id: action.payload, inputText: "", isActive: false,  isFocused: false } ]};
         
     break;
 
     case 'REMOVE_INPUT':
-          updatedState = (action.payload > 1) ? {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload)))} : {...state};
+          inputs = state.inputs;
+          // if the input removed was an activeInput, and the current highest input is one up, move activeInput index
+          if(inputs.filter(i => i.id === action.payload)[0].isActive === true && inputs.filter(i => i.id === (action.payload - 1))[0].isActive === true)
+          {
+            lastActive = lastActive - 1;
+          }
+          else if(inputs.filter(i => i.id === action.payload)[0].isActive === true && inputs.filter(i => i.id === (action.payload - 1))[0].isActive === false)
+          {
+            lastActive = -1;
+            origin = -1;
+          }
+          updatedState = {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload))), lastActive:lastActive, origin:origin };
+
     break;
 
     default:
         updatedState = state;
     break;
   }
-    saveToLocalStorage('Calcs',updatedState);
+    // console.log(action);
+    // console.log(updatedState);
+
+    saveToLocalStorage('Calcs', updatedState);
     return updatedState;
 };
 

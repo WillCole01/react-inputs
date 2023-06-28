@@ -3,7 +3,8 @@ export const appState = {
         inputs: [{
                 id: 1,
                 inputText: "",
-                isActive: false
+                isActive: false,
+                isFocused: false
             }
         ],
         origin: -1,

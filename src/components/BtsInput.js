@@ -5,39 +5,32 @@ import  Dropdown  from './Dropdown';
 import { Card, CardBody } from "reactstrap";
 import { useState } from "react";
 
-const BtsInput = ({input, changeInput, handleClick, lister, parser}) => {
+const BtsInput = ({input, changeInput, handleClick, 
+                   handleInputFocus, calcsList, lister, parser }) => 
+{
 
   const initialWordList = lister.getInitialList();
+
   const [wordList, setWordList] = useState(initialWordList);
-  const [filteredWords, setFilteredWords] = useState([]); // filteredWords
+  const [filteredWords, setFilteredWords] = useState(initialWordList); // filteredWords
   const [textLength, setTextLength] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const firstN = 6;
   
-  const changeText = (val) => (partial(changeInput, input)) (val);
-  
-  const handleTextInput = (text) => 
-  {
-    if(text.length == 0)
-    {
-      setFilteredWords([]);
-      setTextLength(0);
-    }
-    else
-    {
-        let newList = wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()));
-        setFilteredWords(newList);
-        setTextLength(text.length);
-    }
-  }
+  const changeText = (val) => ( partial(changeInput, input)) (val);
+  const changeFocus = () => { handleInputFocus(input) ;};
+
+  const handleTextInput = (text) => { let newList = wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()));
+                                      setFilteredWords(newList);
+                                      setTextLength(text.length);}
 
   const handleInput = (e) => {
     const wordListLength = Math.min(filteredWords.length,firstN);
-
+    
     switch (e.key){
       case "ArrowDown" && (activeIndex < wordListLength):
         setActiveIndex(activeIndex + 1);
-        break;
+        break; 
 
       case "ArrowUp" && (activeIndex > 0):
         setActiveIndex(activeIndex - 1);
@@ -45,6 +38,7 @@ const BtsInput = ({input, changeInput, handleClick, lister, parser}) => {
 
       case "Enter":
         changeText(filteredWords[activeIndex]); 
+        setWordList([]);
         setFilteredWords([]); 
         setActiveIndex(0);
         break;
@@ -52,7 +46,14 @@ const BtsInput = ({input, changeInput, handleClick, lister, parser}) => {
       case ".":
         let index = parser.getAttributes(e.target.value).length;
         changeText(e.target.value);
-        setWordList(lister.getNextAttribute(e.target.value, index)); //matches current expression to pattern in order to find next dropdown list (from last available attribute)
+        if(e.target.value === '_.')
+        {
+          setWordList(calcsList);
+        }
+        else
+        {
+          setWordList(lister.getNextAttribute(e.target.value, index));
+        }
         break;
 
       case "(":
@@ -62,9 +63,16 @@ const BtsInput = ({input, changeInput, handleClick, lister, parser}) => {
         setWordList(lister.getArguments(e.target.value, lastAttribute)); //matches current expression to pattern in order to find next dropdown list
         break;
 
-      default:
-        handleTextInput(e.target.value);
+      case ")":
+        setWordList([]);
+        setFilteredWords([]); 
         break;
+
+      default:
+        changeText(e.target.value);
+        handleTextInput(e.target.value);
+
+      break;
     }
     setTextLength(e.target.value.length);
   }
@@ -81,19 +89,18 @@ const BtsInput = ({input, changeInput, handleClick, lister, parser}) => {
           <Form.Group id={input.id} className="mb-3" controlId="formBasicText" >
             <Form.Control placeholder="Calc"
                           key={input.id}
-                          onClick={(e) => {e.stopPropagation()}}
-                          onChange={(e) => changeText(e.target.value)}
-                          onKeyUp={(e) => handleInput(e)}
+                          // onClick={(e) => {handleFormClick(e)}}
+                          onFocus={()  => { changeFocus() }   }
+                          onChange={(e) => { handleInput(e)}   }
                           value={input.inputText}
                           autoComplete="off"
                           />
-          <Form.Text className="text-muted" >
-          </Form.Text>
+          <Form.Text className="text-muted" ></Form.Text>
           </Form.Group>
             < Dropdown wordList={filteredWords}
                        leftPosition={textLength} // set to text length eventually
                        showFirstN={(filteredWords.length > 0) ? firstN : 0 }
-                       textLength={input.inputText.length}
+                       textLength={textLength}
                        input={input.value}
                        changeInput={changeInput}
                        activeIndex={activeIndex} />
