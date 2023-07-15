@@ -160,11 +160,12 @@ import React from "react";
     class Lister // returns the autofill list to complete based on a cue: either '(' or '.' or ','signalling a new argument
     { 
       // Must keep some representation of the list due to conditional lists - e.g. key or definition depending on data_type
-      constructor(word_parser, args, grammars)
+      constructor(word_parser, args, grammars, calcsList)
       {
         this._wordParser = word_parser;
         this._args = args;
         this._grammars = grammars;
+        this._calcsList = calcsList;
       };
 
       getUnique = (lst) =>
@@ -172,6 +173,11 @@ import React from "react";
         return lst.filter((item, i, ar) => ar.indexOf(item) === i);
       }
 
+      getCalcsList = () =>
+      {
+        return this._calcsList.map(i => i.CalcShortName);
+      }
+      
       getInitialList = () => 
       {
         let x = [];

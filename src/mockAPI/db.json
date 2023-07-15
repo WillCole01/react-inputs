@@ -1,377 +1,454 @@
-{"Calculations":[
+{"Calculations":
+  [
     {
       "Id": 1,
       "Name": "stp_RAG_Count",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_RAG_Count"
     },
     {
       "Id": 2,
       "Name": "stp_RAG_WeightedAverageValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_RAG_WeightedAverageValue"
     },
     {
       "Id": 3,
       "Name": "stp_RAG_Mode",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_RAG_Mode"
     },
     {
       "Id": 4,
       "Name": "stp_RAG_Coverage",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_RAG_Coverage"
     },
     {
       "Id": 5,
       "Name": "stp_Calculate_SelectSingleValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SelectSingleValue"
     },
     {
       "Id": 6,
       "Name": "stp_Calculate_Sum",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_Sum"
     },
     {
       "Id": 7,
       "Name": "stp_Calculate_RatioEachOverNext",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_RatioEachOverNext"
     },
     {
       "Id": 8,
       "Name": "stp_Calculate_PerformanceSinceInception",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceSinceInception"
     },
     {
       "Id": 9,
       "Name": "stp_Calculate_GetCalculatedValueForNodeStructureFromOutputDataJson",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_GetCalculatedValueForNodeStructureFromOutputDataJson"
     },
     {
       "Id": 10,
       "Name": "stp_Calculate_YearsSinceDateSupplied",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_YearsSinceDateSupplied"
     },
     {
       "Id": 11,
       "Name": "stp_Calculate_ESGProcessIntegration",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_ESGProcessIntegration"
     },
     {
       "Id": 12,
       "Name": "stp_Calculate_CapacityTargetVersusOpprtunitySet",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_CapacityTargetVersusOpprtunitySet"
     },
     {
       "Id": 13,
       "Name": "stp_Calculate_CoinvestmentCommitmentKDM",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_CoinvestmentCommitmentKDM"
     },
     {
       "Id": 14,
       "Name": "stp_Calculate_KDMEquityOwnership",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_KDMEquityOwnership"
     },
     {
       "Id": 15,
       "Name": "stp_Calculate_PerformanceAlphaDecayWeightedWithGhostYears",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceAlphaDecayWeightedWithGhostYears"
     },
     {
       "Id": 16,
       "Name": "stp_Calculate_PerformanceInformationRatioDecayWeightedWithGhostYears",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceInformationRatioDecayWeightedWithGhostYears"
     },
     {
       "Id": 17,
       "Name": "stp_Calculate_KDMTenureAverage",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_KDMTenureAverage"
     },
     {
       "Id": 18,
       "Name": "stp_RAG_StabilitySignalValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_RAG_StabilitySignalValue"
     },
     {
       "Id": 19,
       "Name": "stp_RAG_CheckAllExcludedOrNotApplicable",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_RAG_CheckAllExcludedOrNotApplicable"
     },
     {
       "Id": 20,
       "Name": "stp_RAG_CheckAllNotApplicable",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_RAG_CheckAllNotApplicable"
     },
     {
       "Id": 21,
       "Name": "stp_RAG_AdjustedWeightedAverageCalculationResult",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_RAG_AdjustedWeightedAverageCalculationResult"
     },
     {
       "Id": 22,
       "Name": "stp_Calculate_PerformanceStatistics",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceStatistics"
     },
     {
       "Id": 23,
       "Name": "stp_Calculate_Multiply",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Multiply"
     },
     {
       "Id": 24,
       "Name": "stp_Calculate_PerformanceTrackingErrorDecayWeighted",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceTrackingErrorDecayWeighted"
     },
     {
       "Id": 25,
       "Name": "stp_Calculate_LanguageDiversity",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_LanguageDiversity"
     },
     {
       "Id": 26,
       "Name": "stp_Calculate_SelectSingleLastValueCheckPreviousExist",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SelectSingleLastValueCheckPreviousExist"
     },
     {
       "Id": 27,
       "Name": "stp_Calculate_FeeVersusPotentialAlpha",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_FeeVersusPotentialAlpha"
     },
     {
       "Id": 28,
       "Name": "stp_Calculate_CoinvestmentTermsVersusClients",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_CoinvestmentTermsVersusClients"
     },
     {
       "Id": 29,
       "Name": "stp_Calculate_FirmStabilityDebt",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_FirmStabilityDebt"
     },
     {
       "Id": 30,
       "Name": "stp_Calculate_MultiplyNItemsDivideByLast",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_MultiplyNItemsDivideByLast"
     },
     {
       "Id": 31,
       "Name": "stp_Calculate_TeamWiderGroupLeavers",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_TeamWiderGroupLeavers"
     },
     {
       "Id": 32,
       "Name": "stp_Calculate_PerformanceManagerReturnVersusExpected",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceManagerReturnVersusExpected"
     },
     {
       "Id": 33,
       "Name": "stp_Calculate_PerformanceManagerTrackingErrorVersusExpected",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_PerformanceManagerTrackingErrorVersusExpected"
     },
     {
       "Id": 34,
       "Name": "stp_Calculate_Round",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Round"
     },
     {
       "Id": 35,
       "Name": "stp_Calculate_Divide",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Divide"
     },
     {
       "Id": 36,
       "Name": "stp_Calculate_Invert",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Invert"
     },
     {
       "Id": 37,
       "Name": "stp_Calculate_SquareRoot",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_SquareRoot"
     },
     {
       "Id": 38,
       "Name": "stp_Calculate_ConcatenateIncludingBracketsForEachInput",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_ConcatenateIncludingBracketsForEachInput"
     },
     {
       "Id": 39,
       "Name": "stp_Calculate_GetValueFromSingleOrRange",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_GetValueFromSingleOrRange"
     },
     {
       "Id": 40,
       "Name": "stp_RAG_CriticalSubSignalMissing",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_RAG_CriticalSubSignalMissing"
     },
     {
       "Id": 41,
       "Name": "stp_Calculate_ConvertValueCurrency",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_ConvertValueCurrency"
     },
     {
       "Id": 42,
       "Name": "stp_Calculate_Max",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Max"
     },
     {
       "Id": 43,
       "Name": "stp_Calculate_Validate",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Validate"
     },
     {
       "Id": 44,
       "Name": "stp_DataJson_GetValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "stp_DataJson_GetValue"
     },
     {
       "Id": 45,
       "Name": "stp_Calculate_Min",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Min"
     },
     {
       "Id": 46,
       "Name": "stp_Calculate_Power",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Power"
     },
     {
       "Id": 47,
       "Name": "stp_Calculate_SumOfSquare",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SumOfSquare"
     },
     {
       "Id": 48,
       "Name": "stp_Calculate_SplitAndCount",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SplitAndCount"
     },
     {
       "Id": 49,
       "Name": "stp_Calculate_SumProductAssetClass",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SumProductAssetClass"
     },
     {
       "Id": 50,
       "Name": "stp_Calculate_Absolute",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Absolute"
     },
     {
       "Id": 51,
       "Name": "stp_Calculate_SetCalculatedValueToNull",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_SetCalculatedValueToNull"
     },
     {
       "Id": 52,
       "Name": "stp_Calculate_Subtract",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Subtract"
     },
     {
       "Id": 53,
       "Name": "stp_Calculate_Coalesce",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_Coalesce"
     },
     {
       "Id": 54,
       "Name": "stp_Calculate_SelectGrossOrNetFeeAdjusted",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SelectGrossOrNetFeeAdjusted"
     },
     {
       "Id": 55,
       "Name": "stp_Calculate_SaaTaaSsaAddValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_SaaTaaSsaAddValue"
     },
     {
       "Id": 56,
       "Name": "stp_Calculate_ReturnSeriesFromIndexSeries",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_ReturnSeriesFromIndexSeries"
     },
     {
       "Id": 57,
       "Name": "stp_Calculate_Beta",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_Beta"
     },
     {
       "Id": 58,
       "Name": "stp_Calculate_EndCalculation",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_EndCalculation"
     },
     {
       "Id": 59,
       "Name": "stp_Calculate_NextCalculationOrder",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_NextCalculationOrder"
     },
     {
       "Id": 60,
       "Name": "stp_Calculate_GetCalculatedIntermediateValueForNodeStructureFromOutputDataJson",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_GetCalculatedIntermediateValueForNodeStructureFromOutputDataJson"
     },
     {
       "Id": 61,
       "Name": "stp_Calculate_ProcessComplexity",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_ProcessComplexity"
     },
     {
       "Id": 62,
       "Name": "stp_Calculate_EffectiveNumberOfHoldings",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_EffectiveNumberOfHoldings"
     },
     {
       "Id": 63,
       "Name": "stp_Calculate_AdditionalFees",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_AdditionalFees"
     },
     {
       "Id": 64,
       "Name": "stp_Calculate_DiversityAssetClass",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_DiversityAssetClass"
     },
     {
       "Id": 65,
       "Name": "stp_Calculate_CoalesceIgnoreNoData",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_CoalesceIgnoreNoData"
     },
     {
       "Id": 66,
       "Name": "stp_Calculate_LookupMatchValue",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_LookupMatchValue"
     },
     {
       "Id": 67,
       "Name": "stp_Calculate_AverageFromRange",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_AverageFromRange"
     },
     {
       "Id": 68,
       "Name": "stp_Calculate_MatchLookupJsonSelectSingleValue",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_MatchLookupJsonSelectSingleValue"
     },
     {
       "Id": 69,
       "Name": "stp_Calculate_FirmStabilityDebtRandCurrency",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_FirmStabilityDebtRandCurrency"
     },
     {
       "Id": 70,
       "Name": "stp_Calculate_FirstEqualToSecond",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_FirstEqualToSecond"
     },
     {
       "Id": 71,
       "Name": "stp_Calculate_FirstGreaterThanSecond",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_FirstGreaterThanSecond"
     },
     {
       "Id": 72,
       "Name": "stp_Calculate_CheckAndTrueSequence",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_CheckAndTrueSequence"
     },
     {
       "Id": 73,
       "Name": "stp_Calculate_CheckOrTrueSequence",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_CheckOrTrueSequence"
     },
     {
       "Id": 74,
       "Name": "stp_Calculate_ConcatenateExcludingBracketsFromEachInput",
-      "CanTakeCalculatedValueInput": 1
+      "CanTakeCalculatedValueInput": 1,
+      "CalcShortName": "_ConcatenateExcludingBracketsFromEachInput"
     },
     {
       "Id": 75,
       "Name": "stp_Calculate_CheckContainsValue",
-      "CanTakeCalculatedValueInput": 0
+      "CanTakeCalculatedValueInput": 0,
+      "CalcShortName": "_CheckContainsValue"
     }
-   ]}
+   ]
+  }

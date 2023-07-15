@@ -1,3 +1,5 @@
+// a json blob to aid with global replication/autocomplete features
+
 export const templates = {
   1: '{"Name":"Fixed Value","DataId":"9","Value":"{% value %}"}',
   2: '{"Name":"{% data || _ %}","DataId":"11","NodeId":"{% node:nodeid %}"}',

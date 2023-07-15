@@ -5,35 +5,57 @@ import  Dropdown  from './Dropdown';
 import { Card, CardBody } from "reactstrap";
 import { useState } from "react";
 
-const BtsInput = ({input, changeInput, handleClick, 
-                   handleInputFocus, calcsList, lister, parser }) => 
+const BtsInput = ({input, changeInput, handleClick, handleInputFocus, lister, parser }) => 
 {
 
-  const initialWordList = lister.getInitialList();
-
+  const initialWordList = lister.getCalcsList();
   const [wordList, setWordList] = useState(initialWordList);
-  const [filteredWords, setFilteredWords] = useState(initialWordList); // filteredWords
+  const [filteredWords, setFilteredWords] = useState([]); // filteredWords
   const [textLength, setTextLength] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
-  const firstN = 6;
+  const [firstN, setFirstN] = useState(0);
+  const [startIndex, setStartIndex ] = useState(0);
+  const [endIndex, setEndIndex ]     = useState(6);
   
   const changeText = (val) => ( partial(changeInput, input)) (val);
-  const changeFocus = () => { handleInputFocus(input) ;};
-
-  const handleTextInput = (text) => { let newList = wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()));
-                                      setFilteredWords(newList);
-                                      setTextLength(text.length);}
+  const changeFocus = () => { handleInputFocus(input)};
+  const handleTextInput = (text) => { if(text === '') {setFilteredWords([]); setTextLength(0)}
+                                      else { setFilteredWords(wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()))); setTextLength(text.length);}
+                                    }
 
   const handleInput = (e) => {
-    const wordListLength = Math.min(filteredWords.length,firstN);
-    
-    switch (e.key){
-      case "ArrowDown" && (activeIndex < wordListLength):
-        setActiveIndex(activeIndex + 1);
-        break; 
+   switch (e.key)
+   {
+      case ("ArrowDown"):
+        if (activeIndex < firstN)
+        {
+            setActiveIndex(activeIndex + 1)
+        }
+        else if(activeIndex >= firstN && activeIndex < filteredWords.length)
+        {
+          if(activeIndex === endIndex)
+          {
+            setStartIndex(startIndex + 1);
+            setEndIndex(activeIndex + 1);
+          }
+          setActiveIndex(activeIndex + 1);
+        }
+        break;
 
-      case "ArrowUp" && (activeIndex > 0):
-        setActiveIndex(activeIndex - 1);
+      case ("ArrowUp"):
+        if (activeIndex < firstN || activeIndex === filteredWords.length)
+          {
+              setActiveIndex(activeIndex - 1)
+          }
+          else if(activeIndex >= firstN && activeIndex < filteredWords.length)
+          {
+            if(activeIndex === startIndex)
+            {
+              setStartIndex(startIndex - 1);
+              setEndIndex(activeIndex - 1);
+            }
+            setActiveIndex(activeIndex - 1);
+          }
         break;
 
       case "Enter":
@@ -41,19 +63,15 @@ const BtsInput = ({input, changeInput, handleClick,
         setWordList([]);
         setFilteredWords([]); 
         setActiveIndex(0);
+        setFirstN(0);
         break;
       
       case ".":
         let index = parser.getAttributes(e.target.value).length;
         changeText(e.target.value);
-        if(e.target.value === '_.')
-        {
-          setWordList(calcsList);
-        }
-        else
-        {
-          setWordList(lister.getNextAttribute(e.target.value, index));
-        }
+        setFirstN(0);
+        if(e.target.value === '_.'){ setWordList(calcsList); }
+        else { setWordList(lister.getNextAttribute(e.target.value, index)); }
         break;
 
       case "(":
@@ -61,18 +79,20 @@ const BtsInput = ({input, changeInput, handleClick,
         let lastAttribute = attributes[attributes.length];
         changeText(e.target.value);
         setWordList(lister.getArguments(e.target.value, lastAttribute)); //matches current expression to pattern in order to find next dropdown list
+        setFirstN(Math.min(filteredWords.length, firstN));
         break;
 
       case ")":
         setWordList([]);
         setFilteredWords([]); 
+        setFirstN(0);
         break;
 
       default:
         changeText(e.target.value);
         handleTextInput(e.target.value);
-
-      break;
+        setFirstN(Math.min(filteredWords.length,firstN));
+        break;
     }
     setTextLength(e.target.value.length);
   }
@@ -89,17 +109,18 @@ const BtsInput = ({input, changeInput, handleClick,
           <Form.Group id={input.id} className="mb-3" controlId="formBasicText" >
             <Form.Control placeholder="Calc"
                           key={input.id}
-                          // onClick={(e) => {handleFormClick(e)}}
                           onFocus={()  => { changeFocus() }   }
-                          onChange={(e) => { handleInput(e)}   }
+                          onKeyDown={(e) => { handleInput(e)}   }
                           value={input.inputText}
                           autoComplete="off"
                           />
           <Form.Text className="text-muted" ></Form.Text>
           </Form.Group>
             < Dropdown wordList={filteredWords}
+                       startIndex={startIndex}
+                       endIndex  ={Math.max(firstN, endIndex)}
                        leftPosition={textLength} // set to text length eventually
-                       showFirstN={(filteredWords.length > 0) ? firstN : 0 }
+                       showFirstN={Math.min(firstN,filteredWords.length)}
                        textLength={textLength}
                        input={input.value}
                        changeInput={changeInput}
