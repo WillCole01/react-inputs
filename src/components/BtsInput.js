@@ -86,7 +86,6 @@ const BtsInput = ({input, changeInput, handleClick, handleInputFocus, lister, pa
         changeText(e.target.value);
         handleTextInput(e.target.value);
         setFirstN(Math.min(filteredWords.length,firstN));
-        setCharacter(e.target.value[(e.target.value.length - 1)]);
         break;
     }
     setTextLength(e.target.value.length);
