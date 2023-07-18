@@ -8,54 +8,48 @@ import { useState } from "react";
 const BtsInput = ({input, changeInput, handleClick, handleInputFocus, lister, parser }) => 
 {
 
+  // Setting the intellisense list
   const initialWordList = lister.getCalcsList();
   const [wordList, setWordList] = useState(initialWordList);
   const [filteredWords, setFilteredWords] = useState([]); // filteredWords
   const [textLength, setTextLength] = useState(0);
+
+  // Dropdown state control
   const [activeIndex, setActiveIndex] = useState(0);
   const [firstN, setFirstN] = useState(0);
   const [startIndex, setStartIndex ] = useState(0);
   const [endIndex, setEndIndex ]     = useState(6);
-  
+
+  //Updating text, clicking inputs
   const changeText = (val) => ( partial(changeInput, input)) (val);
   const changeFocus = () => { handleInputFocus(input)};
-  const handleTextInput = (text) => { if(text === '') {setFilteredWords([]); setTextLength(0)}
-                                      else { setFilteredWords(wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()))); setTextLength(text.length);}
-                                    }
+  const handleTextInput = (text) => { if(text === '') {setFilteredWords([]); setTextLength(0)} else { setFilteredWords(wordList.filter(c => c.toUpperCase().startsWith(text.toUpperCase()))); setTextLength(text.length);}}
 
   const handleInput = (e) => {
    switch (e.key)
    {
       case ("ArrowDown"):
-        if (activeIndex < firstN)
-        {
-            setActiveIndex(activeIndex + 1)
-        }
-        else if(activeIndex >= firstN && activeIndex < filteredWords.length)
+        if(activeIndex < filteredWords.length)
         {
           if(activeIndex === endIndex)
           {
             setStartIndex(startIndex + 1);
-            setEndIndex(activeIndex + 1);
+            setEndIndex(endIndex + 1);
           }
           setActiveIndex(activeIndex + 1);
         }
         break;
 
       case ("ArrowUp"):
-        if (activeIndex < firstN || activeIndex === filteredWords.length)
+        if(activeIndex > 0)
+        {
+          if(activeIndex === startIndex)
           {
-              setActiveIndex(activeIndex - 1)
+            setStartIndex(startIndex - 1);
+            setEndIndex(endIndex - 1);
           }
-          else if(activeIndex >= firstN && activeIndex < filteredWords.length)
-          {
-            if(activeIndex === startIndex)
-            {
-              setStartIndex(startIndex - 1);
-              setEndIndex(activeIndex - 1);
-            }
-            setActiveIndex(activeIndex - 1);
-          }
+          setActiveIndex(activeIndex - 1);
+        }
         break;
 
       case "Enter":
@@ -92,6 +86,7 @@ const BtsInput = ({input, changeInput, handleClick, handleInputFocus, lister, pa
         changeText(e.target.value);
         handleTextInput(e.target.value);
         setFirstN(Math.min(filteredWords.length,firstN));
+        setCharacter(e.target.value[(e.target.value.length - 1)]);
         break;
     }
     setTextLength(e.target.value.length);
@@ -109,8 +104,8 @@ const BtsInput = ({input, changeInput, handleClick, handleInputFocus, lister, pa
           <Form.Group id={input.id} className="mb-3" controlId="formBasicText" >
             <Form.Control placeholder="Calc"
                           key={input.id}
-                          onFocus={()  => { changeFocus() }   }
-                          onKeyDown={(e) => { handleInput(e)}   }
+                          onFocus={()  => {changeFocus()}}
+                          onKeyDown={(e) => {handleInput(e) }}
                           value={input.inputText}
                           autoComplete="off"
                           />

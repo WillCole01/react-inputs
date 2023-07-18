@@ -110,16 +110,12 @@ const InputReducer = (state, action) => {
             origin = -1;
           }
           updatedState = {...state,  inputs: state.inputs.filter(i => (i.id !== (action.payload))), lastActive:lastActive, origin:origin };
-
     break;
 
     default:
         updatedState = state;
     break;
   }
-    // console.log(action);
-    // console.log(updatedState);
-
     saveToLocalStorage('Calcs', updatedState);
     return updatedState;
 };

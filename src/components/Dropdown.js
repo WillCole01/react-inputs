@@ -1,26 +1,25 @@
-import DropdownOption from "./DropdownOption";
-import partial  from "lodash/partial"; 
-import { useState } from "react";
+import {useEffect} from 'react';
 
-const Dropdown = ({wordList, startIndex, endIndex, leftPosition, width, showFirstN, textLength, input, changeInput, activeIndex}) => {
-
-// const changeText = (val) => (partial(changeInput, input)) (val);
-// startIndex={startIndex}
-// endIndex  ={Math.max(firstN, endIndex)}
-
-return(
+const Dropdown = ({wordList, startIndex, endIndex, leftPosition, textLength, activeIndex}) => {
+  
+  useEffect(() => 
+    {console.log("start index: " + startIndex.toString() + " end index: " + endIndex.toString() + " activeIndex: " + activeIndex.toString())},
+    [startIndex,endIndex,activeIndex]
+  )
+  
+  return(
   <div className="autocomplete-items" style={{zIndex: 5, position: "relative" }}  >
-      <ul style={{"marginLeft":leftPosition.toString()+"lm", textAlign:"left",  backgroundColor:"white", 
-                  color:"black", position: "relative", whiteSpace:"nowrap"}}>
-        
-        {wordList.slice(startIndex,endIndex).map(
+      <ul style={{"marginLeft":leftPosition.toString()+"lm", textAlign:"left",  backgroundColor:"white",  
+        color:"black", position: "relative", whiteSpace:"nowrap"}}>
+        {wordList.map(
           (w, index ) => 
             (   
-                <li key={index} style={{width:"100%", backgroundColor: (index == activeIndex ? "lightblue" : "white") }}>
-                  <DropdownOption text={w} textLength={textLength} />
+                <li key={index} style={index === activeIndex ? {backgroundColor:"Blue", color:"White"}  : {backgroundColor:"White"} }> 
+                        <p> <strong>{w.substr(0,textLength)}</strong>{w.substr(textLength, w.length)} </p>
                 </li>
             )
-        ).slice(0, showFirstN)}
+        ).splice(startIndex, endIndex)}
+
       </ul>
   </div>
   );

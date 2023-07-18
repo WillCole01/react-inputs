@@ -14,7 +14,7 @@ const CalcsWrapper = () => {
 
   const hotkeyhandler = HotKeysPreventDefaults({
                                                 'addInput': ()  => {   topInputId.current = topInputId.current + 1;  dispatch({type: 'ADD_INPUT', payload: topInputId.current}); },
-                                                'removeInput': () => { dispatch({type: 'REMOVE_INPUT', payload: topInputId.current}); topInputId.current = ((topInputId.current < 2)? 1 : topInputId.current - 1) },
+                                                'removeInput': () => {if(topInputId.current > 1){ dispatch({type: 'REMOVE_INPUT', payload: topInputId.current}); topInputId.current = ((topInputId.current < 2) ? 1 : topInputId.current - 1) }},
                                                 'quickSave': () => { dispatch({type: 'SAVE' }); },
                                                 'clearAll':() => {topInputId.current = 1; dispatch({type: 'CLEAR_ALL' }); },
                                                 'selectUp': () => { dispatch({type: 'SELECT_UP' }); },

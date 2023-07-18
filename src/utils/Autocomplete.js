@@ -90,9 +90,6 @@ function autocomplete(inp, arr) {
         if (x) x = x.getElementsByTagName("div");
 
         // reassess the expression, determine the input list
-        // console.log(state.currentValue + ' ' + state.leftMargin)
-        // console.log(state.currentValue + ' ' + state.leftMargin)
-
         if (e.keyCode == 40) {
           /*If the arrow DOWN key is pressed,
           increase the currentFocus variable:*/
