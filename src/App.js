@@ -20,8 +20,6 @@ const App = () => {
             <Row>
                <BtsNavbar /> 
             </Row>
-
-            {/* <Router> */}
             <Routes> 
                   <Route path="/"  Component={Model}/> 
                   <Route path="/Calcs"  Component={CalcsWrapper}/> 
@@ -31,8 +29,6 @@ const App = () => {
                   <Route path="/Auth" Component={Authenticate}/>
                   <Route path="/Shortcuts" Component={Shortcuts}/>
             </Routes>
-            {/* </Router> */}
-
          </Container>
    </React.StrictMode>
 

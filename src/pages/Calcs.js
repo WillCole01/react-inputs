@@ -10,15 +10,14 @@ import ScrollBox from "../components/ScrollBox";
 import TextArea from "../components/TextArea";
 import RunCard from "../components/RunCard";
 
-const Calcs = ({inputs, changeInput, inputActivate, focusInput}) => {
+const Calcs = ({inputs, handleChangeInput, handleInputActivate, handleInputFocus}) => {
 
   // init app data 
   const RunInformationData = {"Manager":"GSAM", "Product": "Equity Global", "AsAtDate":"2015-01-01"};
 
-  const handleChangeInput = (input) =>  { changeInput(input) }; //wording
-  const handleInputActivate = (input) =>  { inputActivate(input) };
-  const handleInputFocus = (input) =>  {  focusInput(input);  };
-
+  // const handleChangeInput = (input, wording) =>  {  handleChangeInput(input, wording) }; //wording
+  // const handleInputActivate = (input) =>  {  handleInputActivate(input) };
+  // const handleInputFocus = (input) =>  {  handleInputFocus(input);  };
 
   return (
     <div className="App">
@@ -28,7 +27,7 @@ const Calcs = ({inputs, changeInput, inputActivate, focusInput}) => {
           <Col md={12}>
             <Row className="fluid full" >
               <Col md={9}>
-                    <ScrollBox inputs={inputs} changeInput={handleChangeInput} handleClick={handleInputActivate} handleInputFocus={handleInputFocus}/>
+                    <ScrollBox inputs={inputs} handleChangeInput={handleChangeInput} handleInputActivate={handleInputActivate} handleInputFocus={handleInputFocus}/>
               </Col>
         
               <Col md={3}>

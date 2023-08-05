@@ -5,30 +5,27 @@ import {grammars,argument_mappings} from '../utils/AutocompleteData';
 // import { useState,useLayoutEffect } from "react";
 // import { chunk } from "lodash";
 
-const InputList = ({ inputs, calculationData, changeInput, handleClick, handleInputFocus}) => {
-
+const InputList = ({ inputs, handleInputChange, handleInputClick, handleInputFocus, calculationData}) => {
+  
   const w = new WordParser();
   const l = new Lister(w,argument_mappings,grammars,calculationData)
-  
-  const renderInput = (input, changeInput ,handleClick) => {
-    return (
-      <li key={input.id}>
-            <BtsInput
-              input={input}
-              changeInput={changeInput}
-              handleClick={handleClick}
-              handleInputFocus={handleInputFocus}
-              lister={l}
-              parser={w}/>
-      </li>
-    );
-  };
-  
-  return (<ul>
-              {
-                inputs.map((x) => (renderInput(x,  changeInput, handleClick, handleInputFocus)))
-              }
-          </ul>);
-};
+
+  return (
+          <ul>
+          {inputs.map((x, key) => (
+                  <li key={key}>
+                          <BtsInput
+                            input={x}
+                            handleInputChange={handleInputChange}
+                            handleInputClick ={handleInputClick}
+                            handleInputFocus ={handleInputFocus}
+                            lister={l}
+                            parser={w}/>
+                    </li>       
+              ))
+            }
+          </ul>
+        )
+    }
 
 export default InputList;

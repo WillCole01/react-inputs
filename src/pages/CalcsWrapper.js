@@ -43,7 +43,7 @@ const CalcsWrapper = () => {
 
   return (
     <HotKeys keyMap={hotkeymap} handlers={hotkeyhandler}>
-        <Calcs inputs={state.inputs} changeInput={changeInput} inputActivate={inputActivate} focusInput={focusInput} />
+        <Calcs inputs={state.inputs} handleChangeInput={changeInput} handleInputActivate={inputActivate} handleFocusInput={focusInput} />
     </HotKeys>
   );
 };
